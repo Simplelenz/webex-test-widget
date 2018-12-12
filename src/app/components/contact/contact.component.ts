@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core'
+import {IconConstant} from '../../configurations/IconConstants';
 
 @Component({
   selector: 'app-contact',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  @Input() contactName: string = 'No Name';
+  IconConstant: any = IconConstant;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
