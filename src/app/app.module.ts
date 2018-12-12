@@ -8,13 +8,33 @@ import { AuthComponent } from './auth/auth.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { UtilService } from './services/util.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ContactComponent } from './components/contact/contact.component';
+import { ConversationPanelComponent } from './components/conversation-panel/conversation-panel.component';
+import { ContactPanelComponent } from './components/contact-panel/contact-panel.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { PanelContainerComponent } from './components/panel-container/panel-container.component';
+import { ConversationNamePopupComponent } from './components/conversation-name-popup/conversation-name-popup.component';
+import { MessagePanelComponent } from './components/message-panel/message-panel.component';
+import { VideoPanelComponent } from './components/video-panel/video-panel.component';
+import { AudioPanelComponent } from './components/audio-panel/audio-panel.component';
+import { IconComponent } from './components/icon/icon.component';
 
 const appRoutes: Routes = [
 ];
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    ContactComponent,
+    ConversationPanelComponent,
+    ContactPanelComponent,
+    SearchBarComponent,
+    PanelContainerComponent,
+    ConversationNamePopupComponent,
+    MessagePanelComponent,
+    VideoPanelComponent,
+    AudioPanelComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,
