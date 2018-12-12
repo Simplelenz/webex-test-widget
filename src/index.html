@@ -1,14 +1,27 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>TestWidget</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    var xhrObj = new XMLHttpRequest();
+    var url = '/config/config.js?' + Date.now();
+    xhrObj.open('GET', url, false);
+    xhrObj.send('');
+    var se = document.createElement('script');
+    se.type = "text/javascript";
+    se.text = xhrObj.responseText;
+    document.getElementsByTagName('head')[0].appendChild(se);
+  </script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
