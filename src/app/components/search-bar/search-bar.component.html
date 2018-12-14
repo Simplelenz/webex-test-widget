@@ -1,5 +1,5 @@
 <div class="search_action--box">
-  <input type="text" name="search" placeholder="Search here">
+  <input type="text" name="search" placeholder="Search here" [(ngModel)]="term" (keyup)="goSearch()">
   <button class="search">
     <app-icon [faIconString]="IconConstant.SEARCH"></app-icon>
   </button>

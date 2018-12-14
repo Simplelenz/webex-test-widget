@@ -22,6 +22,8 @@ import {MockService} from "./services/mock.service";
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { FrontierOpenerComponent } from './components/frontier-opener/frontier-opener.component';
 import { FrontierWidgetComponent } from './components/frontier-widget/frontier-widget.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
 ];
@@ -46,6 +48,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    Ng2SearchPipeModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes, {}),
   ],
   providers: [

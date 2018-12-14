@@ -2,12 +2,15 @@
   <div id="conversion-panel" class="panel">
     <div class="panel_wrapper">
       <div class="search_action">
-        <app-search-bar></app-search-bar>
+        <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
         <div class="results_box">
           <ul>
-            <app-contact></app-contact>
+            <ng-container *ngFor="let contact of contactList|filter:term">
+              <app-contact [icon]="(contact?.icon)? contact.icon : IconConstant.DEFAULT_ICON "
+                           [name]="contact?.name" [dateTime]="contact?.dateTime"></app-contact>
+            </ng-container>
           </ul>
         </div>
       </div>

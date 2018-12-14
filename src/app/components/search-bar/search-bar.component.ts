@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IconConstant} from "../../configurations/IconConstants";
 
 @Component({
@@ -8,11 +8,18 @@ import {IconConstant} from "../../configurations/IconConstants";
 })
 export class SearchBarComponent implements OnInit {
 
-  IconConstant: any = IconConstant;
+  @Output() searchText: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  IconConstant: any = IconConstant;
+  term: string = '';
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  goSearch() {
+    this.searchText.emit(this.term);
+  }
 }
