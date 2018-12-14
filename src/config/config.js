@@ -1,1 +1,4 @@
-window.frontier = {};
+window.FRONTIER = {};
+window.FRONTIER['REDIRECT_URI'] = 'http://localhost:3000/';
+window.FRONTIER['CLIENT_ID'] = 'C2ae5541e22982ee50c0f6ac8b5856860accad2fe53ff10c8b2e236f9427a31f3';
+window.FRONTIER['CLIENT_SECRET'] = '32e0539e7574c5dbecb153ff95904e8a57d2d8682a6a49850953d2cf48520bfa';

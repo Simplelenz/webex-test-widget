@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { HttpRequest } from '@angular/common/http';
+import { URLSearchParams, RequestOptions, RequestMethod, Headers } from '@angular/http';
+import { Constant } from '../configurations/StringConstants';
+import { URL } from '../configurations/UrlConstants';
 
 @Injectable()
 export class LoginService {
@@ -9,15 +11,18 @@ export class LoginService {
   }
 
   getAccessToken(grantType: string, clientId: string, clientSecret: string, authCode: string, redirectUri: string) {
-    const url = 'https://api.ciscospark.com/v1/access_token';
-    const method = 'POST';
+    const options = new RequestOptions;
+    options.url = URL.WEBEX_API_BASE + URL.ACCESS_TOKEN;
+    options.method = RequestMethod.Post;
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const params = new URLSearchParams();
-    params.append('grant_type' , grantType);
-    params.append('client_id', clientId);
-    params.append('client_secret', clientSecret);
-    params.append('code', authCode);
-    params.append('redirect_uri', redirectUri);
-    const options = new HttpRequest(method, url, params);
+    params.append(Constant.GRANT_TYPE , grantType);
+    params.append(Constant.CLIENT_ID, clientId);
+    params.append(Constant.CLIENT_SECRET, clientSecret);
+    params.append(Constant.CODE, authCode);
+    params.append(Constant.REDIRECT_URI, redirectUri);
+    options.body = params;
 
     return this.httpService.request(options);
   }

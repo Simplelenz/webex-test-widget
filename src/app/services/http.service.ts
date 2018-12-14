@@ -1,24 +1,21 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { Http, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class HttpService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private http: Http) {
 
   }
 
-  request(options: HttpRequest<any>) {
-    options.params.set('timestamp', (new Date()).getTime().toString());
+  request(options: RequestOptions) {
+    // options.url.concat('timestamp', (new Date()).getTime().toString());
     return this.processRequest(options);
   }
 
-  processRequest(options: HttpRequest<any>) {
-    return this.httpClient.request(
-      options.method.toString(),
-      options.url,
-      options
+  processRequest(options: RequestOptions) {
+    return this.http.request(options.url, options
     );
   }
 
