@@ -1,17 +1,12 @@
-<div>
-  <div>
-    <app-icon [faIconString]="IconConstant.DEFAULT_SINGLE_USER"></app-icon>
+<li>
+  <div class="result-row">
+    <p class="data">
+      <span><app-icon [faIconString]="icon"></app-icon></span>{{name}}
+    </p>
+    <p class="action">
+      <button class="view"><!-- view --></button>
+      <button class="cancel">delete</button>
+    </p>
   </div>
-  <div>
-    <span>{{contactName}}</span>
-  </div>
-  <div>
-    <div>
-      <app-icon></app-icon>
-    </div>
-    <span>|</span>
-    <div>
-      <app-icon></app-icon>
-    </div>
-  </div>
-</div>
+  <span class="create-time">{{dateTime}}</span>
+</li>

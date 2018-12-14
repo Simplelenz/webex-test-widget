@@ -1,0 +1,30 @@
+<div class="top-nav">
+  <ul class="tabs-nav">
+    <li>
+      <button *ngIf="(activatedTab == tab.VIDEO) || (activatedTab == tab.AUDIO)"
+              (click)="activatedTab = tab.CONVERSATION; panelBack();" class="back-btn">
+        <app-icon [faIconString]="IconConstant.BACK_ARROW"></app-icon>
+      </button>
+    </li>
+    <li *ngIf="visibleTabs.CONVERSATION" (click)="activatedTab = tab.CONVERSATION; clickTab(tab.CONVERSATION);"
+        [ngClass]="(activatedTab == tab.CONVERSATION)?'tab-active':''"><a
+      class="tabs-nav_label">conversion</a>
+    </li>
+    <li *ngIf="visibleTabs.CONTACTS" (click)="activatedTab = tab.CONTACTS; clickTab(tab.CONTACTS);"
+        [ngClass]="(activatedTab == tab.CONTACTS)?'tab-active':''"><a
+      class="tabs-nav_label">contacts</a>
+    </li>
+    <li *ngIf="visibleTabs.VIDEO" (click)="activatedTab = tab.VIDEO; clickTab(tab.VIDEO);"
+        [ngClass]="(activatedTab == tab.VIDEO)?'tab-active':''"><a
+      class="tabs-nav_label">video</a>
+    </li>
+    <li *ngIf="visibleTabs.AUDIO" (click)="activatedTab = tab.AUDIO; clickTab(tab.AUDIO);"
+        [ngClass]="(activatedTab == tab.AUDIO)?'tab-active':''"><a
+      class="tabs-nav_label">audio</a>
+    </li>
+  </ul>
+  <button class="logout-btn">
+    <app-icon [faIconString]="IconConstant.LOGOUT"></app-icon>
+    logout
+  </button>
+</div>

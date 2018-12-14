@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IconConstant} from "../../configurations/IconConstants";
+import {TAB} from "../navigation-bar/tabs.enum";
 
 @Component({
   selector: 'app-panel-container',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelContainerComponent implements OnInit {
 
-  constructor() { }
+  @Input() userName: string = 'Hello Kevin';
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+
+  IconConstant: any = IconConstant;
+  tab: any = TAB;
+  panel = this.tab.CONVERSATION;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  clickClose() {
+    this.close.emit(false);
+  }
+
+  changePanel(tabNum) {
+    this.panel = tabNum;
+  }
 }

@@ -18,6 +18,10 @@ import { MessagePanelComponent } from './components/message-panel/message-panel.
 import { VideoPanelComponent } from './components/video-panel/video-panel.component';
 import { AudioPanelComponent } from './components/audio-panel/audio-panel.component';
 import { IconComponent } from './components/icon/icon.component';
+import {MockService} from "./services/mock.service";
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { FrontierOpenerComponent } from './components/frontier-opener/frontier-opener.component';
+import { FrontierWidgetComponent } from './components/frontier-widget/frontier-widget.component';
 
 const appRoutes: Routes = [
 ];
@@ -34,7 +38,10 @@ const appRoutes: Routes = [
     MessagePanelComponent,
     VideoPanelComponent,
     AudioPanelComponent,
-    IconComponent
+    IconComponent,
+    NavigationBarComponent,
+    FrontierOpenerComponent,
+    FrontierWidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +50,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     // {provide: LocationStrategy, useClass: HashLocationStrategy}
-    UtilService
+    UtilService,
+    MockService
   ],
   bootstrap: [AppComponent]
 })
