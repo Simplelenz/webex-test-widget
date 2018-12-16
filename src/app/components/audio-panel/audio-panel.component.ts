@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {IconConstant} from '../../configurations/IconConstants';
 
 @Component({
   selector: 'app-audio-panel',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AudioPanelComponent implements OnInit {
 
-  constructor() { }
+  @Output() closeAudioCallFunction: EventEmitter<any> = new EventEmitter<any>();
+  IconConstant: any = IconConstant;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  closeCall() {
+    this.closeAudioCallFunction.emit();
   }
 
 }

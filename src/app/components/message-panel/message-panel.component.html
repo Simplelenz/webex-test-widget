@@ -65,8 +65,12 @@
           </div>
           <div class="message-input">
             <div class="options">
-              <button class="video"><i class="fas fa-video"></i></button>
-              <button class="audio"><i class="fas fa-phone"></i></button>
+              <button (click)="clickVideoCall()" class="video">
+                <app-icon [faIconString]="IconConstant.CONTACT_VIDEO"></app-icon>
+              </button>
+              <button (click)="clickAudioCall()" class="audio">
+                <app-icon [faIconString]="IconConstant.CONTACT_PHONE"></app-icon>
+              </button>
             </div>
             <div class="input-box">
               <button class="attachment"><i class="fas fa-paperclip"></i></button>

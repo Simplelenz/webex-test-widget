@@ -1,3 +1,45 @@
-<p>
-  video-panel works!
-</p>
+<div class="tabs-stage">
+
+  <div id="conversion-panel" class="panel">
+    <div class="panel_wrapper">
+      <div class="additional_info">
+        <div class="additional_info--box">
+          <p class="title">
+            <span><i class="fas fa-users"></i></span>conversation 1
+          </p>
+          <p class="partcipants">
+            <span>4</span>&nbsp;Partcipants
+          </p>
+        </div>
+      </div>
+      <div class="results">
+        <div class="results_box">
+          <div class="call-view">
+            <div class="video">
+              <div class="screen">
+                <img src="./assets/images/video-screen.png" alt="video">
+              </div>
+              <div class="options">
+                <button class="volume">
+                  <app-icon [faIconString]="IconConstant.CALL_VOLUME"></app-icon>
+                </button>
+                <button (click)="closeCall()" class="cancel">
+                  <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
+                </button>
+              </div>
+            </div>
+            <div class="participants">
+              <ul>
+                <li><span class="status active"></span>participant 1</li>
+                <li><span class="status active"></span>participant 2</li>
+                <li><span class="status inactive"></span>participant 3</li>
+                <li><span class="status active"></span>participant 4</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

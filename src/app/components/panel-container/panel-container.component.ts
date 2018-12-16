@@ -59,5 +59,30 @@ export class PanelContainerComponent implements OnInit {
       this.visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
       this.panel = this.activatedTab = this.tab.CONVERSATION;
     }
+    if (this.panel === this.tab.VIDEO || this.panel === this.tab.AUDIO) {
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+      this.panel = this.activatedTab = this.tab.MESSAGE;
+    }
+  }
+
+  clickCallFunctionEmit(type) {
+    if (type === this.tab.VIDEO) {
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: true, AUDIO: false, MESSAGE: false};
+      this.panel = this.activatedTab = this.tab.VIDEO;
+    }
+    if (type === this.tab.AUDIO) {
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: true, MESSAGE: false};
+      this.panel = this.activatedTab = this.tab.AUDIO;
+    }
+  }
+
+  closeVideoCallFunctionEmit() {
+    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+    this.panel = this.activatedTab = this.tab.MESSAGE;
+  }
+
+  closeAudioCallFunctionEmit() {
+    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+    this.panel = this.activatedTab = this.tab.MESSAGE;
   }
 }

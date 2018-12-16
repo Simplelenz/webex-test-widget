@@ -24,7 +24,12 @@
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
           <app-contact-panel *ngIf="panel == tab.CONTACTS"
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>
-          <app-message-panel *ngIf="panel == tab.MESSAGE"></app-message-panel>
+          <app-video-panel *ngIf="panel == tab.VIDEO"
+                           (closeVideoCallFunction)="closeVideoCallFunctionEmit()"></app-video-panel>
+          <app-audio-panel *ngIf="panel == tab.AUDIO"
+                           (closeAudioCallFunction)="closeAudioCallFunctionEmit()"></app-audio-panel>
+          <app-message-panel *ngIf="panel == tab.MESSAGE"
+                             (clickCallFunction)="clickCallFunctionEmit($event)"></app-message-panel>
         </div>
       </div>
     </div>

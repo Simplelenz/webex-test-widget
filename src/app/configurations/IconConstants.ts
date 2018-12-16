@@ -10,4 +10,7 @@ export namespace IconConstant {
   export const CONTACT_CLOSE = 'fas fa-times';
   export const CONTACT_CHECK = 'fas fa-check';
   export const CONTACT_PLUS = 'fas fa-plus';
+  export const CONTACT_VIDEO = 'fas fa-video';
+  export const CONTACT_PHONE = 'fas fa-phone';
+  export const CALL_VOLUME = 'fas fa-volume-up';
 }

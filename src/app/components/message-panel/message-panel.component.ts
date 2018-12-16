@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {IconConstant} from '../../configurations/IconConstants';
+import {TAB} from '../navigation-bar/tabs.enum';
 
 @Component({
   selector: 'app-message-panel',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagePanelComponent implements OnInit {
 
-  constructor() { }
+  @Output() clickCallFunction: EventEmitter<any> = new EventEmitter<any>();
+  tab: any = TAB;
+  IconConstant: any = IconConstant;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  clickVideoCall() {
+    this.clickCallFunction.emit(this.tab.VIDEO);
+  }
+
+  clickAudioCall() {
+    this.clickCallFunction.emit(this.tab.AUDIO);
+  }
 }
