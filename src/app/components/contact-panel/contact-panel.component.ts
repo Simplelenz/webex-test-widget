@@ -1,6 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MockService} from '../../services/mock.service';
 import {IconConstant} from '../../configurations/IconConstants';
+import {URL} from '../../configurations/UrlConstants';
+import {HttpService} from '../../services/http.service';
+import {RequestMethod, RequestOptions} from '@angular/http';
 
 @Component({
   selector: 'app-contact-panel',
@@ -16,7 +19,7 @@ export class ContactPanelComponent implements OnInit {
   term = '';
   selectedContactList: any = [];
 
-  constructor(private mockService: MockService) {
+  constructor(private mockService: MockService, private httpService: HttpService) {
     mockService.getMockJson('mocks/contacts.json').subscribe((response => {
       this.contactList = response;
     }), error => {
@@ -26,6 +29,7 @@ export class ContactPanelComponent implements OnInit {
 
   ngOnInit() {
     this.selectedContactList = [];
+    this.getAllContacts();
   }
 
   selectContact(i, contact) {
@@ -50,5 +54,21 @@ export class ContactPanelComponent implements OnInit {
         this.clickDoneFunction.emit({popUp: false, contactList: this.selectedContactList});
       }
     }
+  }
+
+  getAllContacts() {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + 'v1/rooms';
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
   }
 }

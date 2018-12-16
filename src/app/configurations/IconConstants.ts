@@ -13,4 +13,5 @@ export namespace IconConstant {
   export const CONTACT_VIDEO = 'fas fa-video';
   export const CONTACT_PHONE = 'fas fa-phone';
   export const CALL_VOLUME = 'fas fa-volume-up';
+  export const FILE_ATTACHE = 'fas fa-paperclip';
 }

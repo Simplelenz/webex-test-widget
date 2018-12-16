@@ -14,54 +14,14 @@
       <div class="results">
         <div class="results_box">
           <div class="chat-view">
-            <div class="chat-view_row others">
-              <div class="message">
-                <p class="info">Andrew Bett<span>10:03 AM</span></p>
-                <p class="words">Hi Buddies, How are you?</p>
-              </div>
-            </div>
-            <div class="chat-view_row me">
-              <div class="message">
-                <p class="info">Me<span>10:05 AM</span></p>
-                <p class="words">Hi, I'm fine. How are you buddies ?</p>
-              </div>
-            </div>
-            <div class="chat-view_row others">
-              <div class="message">
-                <p class="info">Andrew Bett<span>10:03 AM</span></p>
-                <p class="words">Hi Buddies, How are you?</p>
-              </div>
-            </div>
-            <div class="chat-view_row me">
-              <div class="message">
-                <p class="info">Me<span>10:05 AM</span></p>
-                <p class="words">Hi, I'm fine. How are you buddies ?</p>
-              </div>
-            </div>
-            <div class="chat-view_row others">
-              <div class="message">
-                <p class="info">Andrew Bett<span>10:03 AM</span></p>
-                <p class="words">Hi Buddies, How are you?</p>
-              </div>
-            </div>
-            <div class="chat-view_row me">
-              <div class="message">
-                <p class="info">Me<span>10:05 AM</span></p>
-                <p class="words">Hi, I'm fine. How are you buddies ?</p>
-              </div>
-            </div>
-            <div class="chat-view_row others">
-              <div class="message">
-                <p class="info">Andrew Bett<span>10:03 AM</span></p>
-                <p class="words">Hi Buddies, How are you?</p>
-              </div>
-            </div>
-            <div class="chat-view_row me">
-              <div class="message">
-                <p class="info">Me<span>10:05 AM</span></p>
-                <p class="words">Hi, I'm fine. How are you buddies ?</p>
-              </div>
-            </div>
+            <app-send-receive-messages></app-send-receive-messages>
+            <app-send-receive-messages [me]="true"></app-send-receive-messages>
+            <app-send-receive-messages></app-send-receive-messages>
+            <app-send-receive-messages></app-send-receive-messages>
+            <app-send-receive-messages [me]="true"></app-send-receive-messages>
+            <app-send-receive-messages [me]="true"></app-send-receive-messages>
+            <app-send-receive-messages></app-send-receive-messages>
+            <app-send-receive-messages></app-send-receive-messages>
           </div>
           <div class="message-input">
             <div class="options">
@@ -73,7 +33,9 @@
               </button>
             </div>
             <div class="input-box">
-              <button class="attachment"><i class="fas fa-paperclip"></i></button>
+              <button class="attachment">
+                <app-icon [faIconString]="IconConstant.FILE_ATTACHE"></app-icon>
+              </button>
               <textarea placeholder="Add Your Message Here" style="overflow: hidden;"></textarea>
             </div>
           </div>
