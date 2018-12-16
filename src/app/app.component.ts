@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {MockService} from "./services/mock.service";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,10 @@ export class AppComponent implements OnInit {
   @ViewChild('videoElem') videoElem: ElementRef;
   @ViewChild('viewAudioElem') viewAudioElem: ElementRef;
   @ViewChild('viewVideoElem') viewVideoElem: ElementRef;
+
+  constructor(private ms:MockService){
+    ms.getMockJson('mocks/conversations.json')
+  }
 
   ngOnInit(): void {
 

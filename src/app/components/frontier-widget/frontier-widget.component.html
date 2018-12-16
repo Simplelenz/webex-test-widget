@@ -1,0 +1,2 @@
+<app-panel-container *ngIf="showPanelContainer" (close)="showHidePanelContainer($event)"></app-panel-container>
+<app-frontier-opener *ngIf="!showPanelContainer" (showPanelContainer)="showHidePanelContainer($event)"></app-frontier-opener>

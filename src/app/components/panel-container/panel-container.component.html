@@ -1,0 +1,25 @@
+<div class="frontier">
+  <div class="frontier_mask"></div>
+  <div class="frontier_widget">
+    <div class="frontier_widget--box">
+      <div class="head">
+        <div class="head_action">
+          <ul>
+            <li class="name"><p>{{userName}}</p></li>
+            <li class="close">
+              <button (click)="clickClose()">
+                <app-icon [faIconString]="IconConstant.CLOSE"></app-icon>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content">
+        <app-navigation-bar (tabChange)="changePanel($event)"
+                            (goBackPanel)="panel == tab.CONVERSATION"></app-navigation-bar>
+        <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
+        <app-contact-panel *ngIf="panel == tab.CONTACTS"></app-contact-panel>
+      </div>
+    </div>
+  </div>
+</div>
