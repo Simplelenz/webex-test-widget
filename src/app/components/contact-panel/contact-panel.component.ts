@@ -12,6 +12,7 @@ export class ContactPanelComponent implements OnInit {
   IconConstant = IconConstant;
   contactList: any = [];
   term: string = '';
+  selectedContactList: any = [];
 
   constructor(private mockService: MockService) {
     mockService.getMockJson('mocks/contacts.json').subscribe((response => {
@@ -24,4 +25,7 @@ export class ContactPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  selectContact(i, contact) {
+    this.selectedContactList.push(contact);
+  }
 }

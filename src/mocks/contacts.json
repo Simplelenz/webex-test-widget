@@ -5,14 +5,26 @@
   },
   {
     "icon": "fas fa-user",
-    "name": "lakshitha madushan"
+    "name": "madushan"
   },
   {
     "icon": "fas fa-user",
-    "name": "tharindu"
+    "name": "chathuranga"
   },
   {
     "icon": "fas fa-users",
-    "name": "sampath maduranga"
+    "name": "sampath"
+  },
+  {
+    "icon": "fas fa-user",
+    "name": "hasini"
+  },
+  {
+    "icon": "fas fa-user",
+    "name": "pathirana"
+  },
+  {
+    "icon": "fas fa-users",
+    "name": "maduranga"
   }
 ]

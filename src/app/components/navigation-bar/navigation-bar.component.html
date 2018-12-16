@@ -1,8 +1,7 @@
 <div class="top-nav">
   <ul class="tabs-nav">
     <li>
-      <button *ngIf="(activatedTab == tab.VIDEO) || (activatedTab == tab.AUDIO)"
-              (click)="activatedTab = tab.CONVERSATION; panelBack();" class="back-btn">
+      <button (click)="activatedTab = tab.CONVERSATION; panelBack();" class="back-btn">
         <app-icon [faIconString]="IconConstant.BACK_ARROW"></app-icon>
       </button>
     </li>

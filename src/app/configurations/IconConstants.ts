@@ -6,4 +6,7 @@ export namespace IconConstant {
   export const CLOSE = 'fas fa-times';
   export const BACK_ARROW = 'fas fa-long-arrow-alt-left';
   export const LOGOUT = 'fas fa-power-off';
+  export const CONTACT_VIEW = 'far fa-eye';
+  export const CONTACT_CLOSE = 'fas fa-times';
+  export const CONTACT_CHECK = 'fas fa-check';
 }
