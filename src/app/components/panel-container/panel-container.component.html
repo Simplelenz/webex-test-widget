@@ -15,10 +15,13 @@
         </div>
       </div>
       <div class="content">
-        <app-navigation-bar (tabChange)="changePanel($event)"
-                            (goBackPanel)="panel == tab.CONVERSATION"></app-navigation-bar>
-        <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
-        <app-contact-panel *ngIf="panel == tab.CONTACTS"></app-contact-panel>
+        <div class="content-wrap">
+          <app-conversation-name-popup></app-conversation-name-popup>
+          <app-navigation-bar (tabChange)="changePanel($event)"
+                              (goBackPanel)="panel == tab.CONVERSATION"></app-navigation-bar>
+          <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
+          <app-contact-panel *ngIf="panel == tab.CONTACTS"></app-contact-panel>
+        </div>
       </div>
     </div>
   </div>

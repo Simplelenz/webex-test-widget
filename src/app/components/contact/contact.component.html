@@ -4,8 +4,13 @@
       <span><app-icon [faIconString]="icon"></app-icon></span>{{name}}
     </p>
     <p class="action">
-      <button class="view"><!-- view --></button>
-      <button class="cancel">delete</button>
+      <button class="view">
+        <app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>
+        <app-icon *ngIf="!isConversationPanel" [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
+      </button>
+      <button class="cancel">
+        <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
+      </button>
     </p>
   </div>
   <span class="create-time">{{(dateTime)? dateTime: ''}}</span>

@@ -5,12 +5,15 @@
         <app-search-bar></app-search-bar>
       </div>
       <div class="results">
+        <button class="create_new">New&nbsp;<i class="fas fa-plus"></i></button>
         <div class="results_box">
-          <ul>
-            <app-contact></app-contact>
-            <app-contact></app-contact>
-            <app-contact></app-contact>
-          </ul>
+          <div class="results-view">
+            <ul>
+              <app-contact [isConversationPanel]="true"></app-contact>
+              <app-contact [isConversationPanel]="true"></app-contact>
+              <app-contact [isConversationPanel]="true"></app-contact>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
