@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {IconConstant} from "../../configurations/IconConstants";
 
 @Component({
   selector: 'app-conversation-panel',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./conversation-panel.component.css']
 })
 export class ConversationPanelComponent implements OnInit {
+
+  IconConstant: any = IconConstant;
 
   constructor() {
   }

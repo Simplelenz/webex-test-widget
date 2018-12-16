@@ -16,11 +16,15 @@
       </div>
       <div class="content">
         <div class="content-wrap">
-          <app-conversation-name-popup></app-conversation-name-popup>
-          <app-navigation-bar (tabChange)="changePanel($event)"
-                              (goBackPanel)="panel == tab.CONVERSATION"></app-navigation-bar>
+          <app-conversation-name-popup *ngIf="showPopUp"
+                                       (popUpFunction)="popUpFunctionEmit($event)"></app-conversation-name-popup>
+          <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
+                              (tabChange)="changePanel($event)"
+                              (goBackPanel)="goBackPanelFunction()"></app-navigation-bar>
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
-          <app-contact-panel *ngIf="panel == tab.CONTACTS"></app-contact-panel>
+          <app-contact-panel *ngIf="panel == tab.CONTACTS"
+                             (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>
+          <app-message-panel *ngIf="panel == tab.MESSAGE"></app-message-panel>
         </div>
       </div>
     </div>

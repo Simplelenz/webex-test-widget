@@ -2,5 +2,6 @@ export enum TAB {
   CONVERSATION,
   CONTACTS,
   VIDEO,
-  AUDIO
+  AUDIO,
+  MESSAGE
 }

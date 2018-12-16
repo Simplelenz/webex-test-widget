@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-conversation-name-popup',
@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConversationNamePopupComponent implements OnInit {
 
-  constructor() { }
+  @Output() popUpFunction: EventEmitter<any> = new EventEmitter<any>();
+
+  conversationName = '';
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  popUpEvents(btn) {
+    if (btn === 'Done') {
+      this.popUpFunction.emit({state: true, conversationName: this.conversationName});
+    }
+    if (btn === 'Cancel') {
+      this.popUpFunction.emit({state: false, conversationName: this.conversationName});
+    }
+  }
 }

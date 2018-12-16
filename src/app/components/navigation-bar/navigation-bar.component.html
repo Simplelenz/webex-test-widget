@@ -21,6 +21,10 @@
         [ngClass]="(activatedTab == tab.AUDIO)?'tab-active':''"><a
       class="tabs-nav_label">audio</a>
     </li>
+    <li *ngIf="visibleTabs.MESSAGE" (click)="activatedTab = tab.MESSAGE; clickTab(tab.MESSAGE);"
+        [ngClass]="(activatedTab == tab.MESSAGE)?'tab-active':''"><a
+      class="tabs-nav_label">message</a>
+    </li>
   </ul>
   <button class="logout-btn">
     <app-icon [faIconString]="IconConstant.LOGOUT"></app-icon>

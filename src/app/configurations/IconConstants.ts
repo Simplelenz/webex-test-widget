@@ -9,4 +9,5 @@ export namespace IconConstant {
   export const CONTACT_VIEW = 'far fa-eye';
   export const CONTACT_CLOSE = 'fas fa-times';
   export const CONTACT_CHECK = 'fas fa-check';
+  export const CONTACT_PLUS = 'fas fa-plus';
 }

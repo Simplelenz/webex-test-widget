@@ -5,7 +5,8 @@
         <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
-        <button class="create_new">Done&nbsp;<i class="fas fa-check"></i></button>
+        <button (click)="clickDone()" class="create_new">Done&nbsp;<app-icon [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
+        </button>
         <div class="results_box">
           <div class="results-view">
             <ul>

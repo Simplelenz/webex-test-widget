@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MockService} from "../../services/mock.service";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MockService} from '../../services/mock.service';
 import {IconConstant} from '../../configurations/IconConstants';
 
 @Component({
@@ -9,9 +9,11 @@ import {IconConstant} from '../../configurations/IconConstants';
 })
 export class ContactPanelComponent implements OnInit {
 
+  @Output() clickDoneFunction: EventEmitter<any> = new EventEmitter<any>();
+
   IconConstant = IconConstant;
   contactList: any = [];
-  term: string = '';
+  term = '';
   selectedContactList: any = [];
 
   constructor(private mockService: MockService) {
@@ -19,13 +21,34 @@ export class ContactPanelComponent implements OnInit {
       this.contactList = response;
     }), error => {
       console.log(error);
-    })
+    });
   }
 
   ngOnInit() {
+    this.selectedContactList = [];
   }
 
   selectContact(i, contact) {
-    this.selectedContactList.push(contact);
+
+    let temp = true;
+
+    this.selectedContactList.forEach(item => {
+      if (contact === item) {
+        temp = false;
+      }
+    });
+    if (temp) {
+      this.selectedContactList.push(contact);
+    }
+  }
+
+  clickDone() {
+    if (this.selectedContactList.length > 0) {
+      if (this.selectedContactList.length > 1) {
+        this.clickDoneFunction.emit({popUp: true, contactList: this.selectedContactList});
+      } else {
+        this.clickDoneFunction.emit({popUp: false, contactList: this.selectedContactList});
+      }
+    }
   }
 }

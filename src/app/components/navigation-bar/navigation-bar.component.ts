@@ -9,12 +9,12 @@ import {IconConstant} from "../../configurations/IconConstants";
 })
 export class NavigationBarComponent implements OnInit {
 
-  @Input() visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false};
+  @Input() visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
   @Output() tabChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() goBackPanel: EventEmitter<any> = new EventEmitter<any>();
 
   tab: any = TAB;
-  activatedTab = this.tab.CONVERSATION;
+  @Input() activatedTab = this.tab.CONVERSATION;
   IconConstant: any = IconConstant;
 
   constructor() {
