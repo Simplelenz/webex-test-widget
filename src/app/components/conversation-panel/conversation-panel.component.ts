@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {IconConstant} from "../../configurations/IconConstants";
-import {URL} from "../../configurations/UrlConstants";
-import {RequestMethod, RequestOptions} from "@angular/http";
-import {HttpService} from "../../services/http.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IconConstant} from '../../configurations/IconConstants';
+import {MockService} from '../../services/mock.service';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-conversation-panel',
@@ -11,31 +10,38 @@ import {HttpService} from "../../services/http.service";
 })
 export class ConversationPanelComponent implements OnInit {
 
+  @Input() conversationList: any = [];
+  @Output() clickNewFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() viewConversation: EventEmitter<any> = new EventEmitter<any>();
+
   IconConstant: any = IconConstant;
-  contactList: any = [];
   term = '';
 
-  constructor(private httpService: HttpService) {
+  constructor(private mockService: MockService, private httpService: HttpService) {
+    // mockService.getMockJson('mocks/conversations.json').subscribe((response => {
+    //   console.log(response);
+    //   this.conversationList = response.items;
+    // }), error => {
+    //   console.log(error);
+    // });
   }
 
   ngOnInit() {
-    this.getAllConversations();
   }
 
-  getAllConversations() {
-    const options = new RequestOptions();
-    options.url = URL.WEBEX_API_BASE + 'v1/rooms';
-    options.method = RequestMethod.Get;
-
-    this.httpService.request(options).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-
+  clickNew() {
+    this.clickNewFunction.emit();
   }
 
+  formatLastActivity(UTC): any {
+    return new Date(UTC);
+  }
+
+  clickCancelFunctionEmit(contact) {
+    console.log(contact);
+  }
+
+  selectConversation(contact) {
+    this.viewConversation.emit(contact);
+  }
 }

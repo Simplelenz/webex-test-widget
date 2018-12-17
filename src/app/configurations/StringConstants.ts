@@ -7,6 +7,9 @@ export namespace Constant {
   export const CODE = 'code';
   export const REDIRECT_URI = 'redirect_uri';
   export const AUTHORIZATION_CODE = 'authorization_code';
+  export const AUTHORIZATION_HEADER = 'Authorization';
+  export const BEARER = 'Bearer';
+  export const IS_AUTHENTICATED = 'isAuthenticated';
 }
 
 export namespace CONF {

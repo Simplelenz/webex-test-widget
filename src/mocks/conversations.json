@@ -1,22 +1,69 @@
-[
-  {
-    "icon": "fas fa-users",
-    "name": "lakshitha",
-    "dateTime": "2018/12/13 3:53PM"
-  },
-  {
-    "icon": "fas fa-user",
-    "name": "lakshitha madushan",
-    "dateTime": "2018/12/13 3:53PM"
-  },
-  {
-    "icon": "fas fa-user",
-    "name": "tharindu",
-    "dateTime": "2018/12/13 3:53PM"
-  },
-  {
-    "icon": "fas fa-users",
-    "name": "sampath maduranga",
-    "dateTime": "2018/12/13 3:53PM"
-  }
-]
+{
+  "items": [
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vZjRjN2JiZjAtZmUxYy0xMWU4LTkzMDctMWIwZGUyMTMxOWUw",
+      "title": "buddy",
+      "type": "group",
+      "isLocked": true,
+      "lastActivity": "2018-12-12T14:48:15.407Z",
+      "teamId": "Y2lzY29zcGFyazovL3VzL1RFQU0vZjRjN2JiZjAtZmUxYy0xMWU4LTkzMDctMWIwZGUyMTMxOWUw",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kMGRmNjE4OS1mMjk2LTQ1NGEtYmNkYS03ZTBkZDc1Y2VkNmI",
+      "created": "2018-12-12T14:48:15.407Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vNzEyZTVkNGUtOGViMy0zMWQ4LThjMjUtOWU0NTc2M2NkNmYz",
+      "title": "Madushan Lakshitha",
+      "type": "direct",
+      "isLocked": false,
+      "lastActivity": "2018-12-05T09:19:28.231Z",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS80ZTZkY2E1Yi1kNmVkLTQ4NzItOGFmNC01NmYwM2JkNmM2YTQ",
+      "created": "2018-12-05T09:19:28.229Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vZmE2ZTNkODAtZjNlMS0xMWU4LWIwYjktZTE5M2UzYWUxNTJh",
+      "title": "Empty Title",
+      "type": "group",
+      "isLocked": false,
+      "lastActivity": "2018-12-05T09:18:34.106Z",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9kMGRmNjE4OS1mMjk2LTQ1NGEtYmNkYS03ZTBkZDc1Y2VkNmI",
+      "created": "2018-11-29T14:20:52.952Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vYjNlMDIwYjAtZjMzMC0xMWU4LTk1ZWItYmYwZmNlZjk2NjUz",
+      "title": "Samith",
+      "type": "group",
+      "isLocked": true,
+      "lastActivity": "2018-12-12T17:30:40.803Z",
+      "teamId": "Y2lzY29zcGFyazovL3VzL1RFQU0vYjNlMDIwYjAtZjMzMC0xMWU4LTk1ZWItYmYwZmNlZjk2NjUz",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS84NWY0NGZhNi1jY2Q4LTRiMTAtOGVkZC0xMjI1NGI2MWNmMTc",
+      "created": "2018-11-28T17:11:53.659Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vNjk2OTEwMjktZTU1Mi0zM2JlLWI4YmUtMWM5ODY0NzUxODQy",
+      "title": "Dasun Senadeera",
+      "type": "direct",
+      "isLocked": false,
+      "lastActivity": "2018-11-28T17:39:34.865Z",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS84NWY0NGZhNi1jY2Q4LTRiMTAtOGVkZC0xMjI1NGI2MWNmMTc",
+      "created": "2018-11-28T15:53:32.356Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vN2IxYzIzYzItMDk5MS0zZmY2LWFjNTktYmM0MzQyZTIxNDJi",
+      "title": "Help Bot",
+      "type": "direct",
+      "isLocked": false,
+      "lastActivity": "2018-11-29T12:42:07.753Z",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS84N2IyODQzMi0zMjAyLTQzOWEtYTM1ZC1mMjc1ZDI0NDA2OGE",
+      "created": "2018-11-27T05:37:29.640Z"
+    },
+    {
+      "id": "Y2lzY29zcGFyazovL3VzL1JPT00vZDJmZGUwOTAtOWQwYy0xMWU1LWFlZWQtMjE3NmZkY2Q4YTU4",
+      "title": "#webex4devs",
+      "type": "group",
+      "isLocked": true,
+      "lastActivity": "2018-12-16T20:18:16.853Z",
+      "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mNWIzNjE4Ny1jOGRkLTQ3MjctOGIyZi1mOWM0NDdmMjkwNDY",
+      "created": "2015-12-07T18:03:30.969Z"
+    }
+  ]
+}

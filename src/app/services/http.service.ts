@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Http, RequestOptions, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Constant} from '../configurations/StringConstants';
 
 @Injectable()
 export class HttpService {
@@ -10,6 +11,15 @@ export class HttpService {
   }
 
   request(options: RequestOptions) {
+
+    if (localStorage.getItem(Constant.WEBEX_TOKENS)) {
+      const accessToken = JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).access_token;
+      if (options.headers === undefined || options.headers === null) {
+        options.headers = new Headers();
+      }
+      options.headers.append(Constant.AUTHORIZATION_HEADER, Constant.BEARER + ' ' + accessToken);
+    }
+
     // options.url.concat('timestamp', (new Date()).getTime().toString());
     return this.processRequest(options);
   }

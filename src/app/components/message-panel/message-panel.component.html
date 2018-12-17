@@ -1,40 +1,41 @@
 <div class="tabs-stage">
-  <div id="conversion-panel" class="panel">
+  <div id="message-panel" class="panel">
     <div class="panel_wrapper">
       <div class="additional_info">
         <div class="additional_info--box">
           <p class="title">
-            <span><i class="fas fa-users"></i></span>conversation 1
+            <span *ngIf="contact.type == 'group'" class="icon"><img src="./assets/images/icons/icon-conversation.png"
+                                                                    alt="conversation icon"></span>
+            <span *ngIf="contact.type == 'direct'" class="icon"><img src="./assets/images/icons/icon-contact.png"
+                                                                     alt="contact icon"></span>
+            <span class="name">{{contact.title}}</span>
           </p>
           <p class="partcipants">
-            <span>4</span>&nbsp;Partcipants
+            <span>{{members.length}}</span>&nbsp;Participants
           </p>
         </div>
       </div>
       <div class="results">
         <div class="results_box">
           <div class="chat-view">
-            <app-send-receive-messages></app-send-receive-messages>
-            <app-send-receive-messages [me]="true"></app-send-receive-messages>
-            <app-send-receive-messages></app-send-receive-messages>
-            <app-send-receive-messages></app-send-receive-messages>
-            <app-send-receive-messages [me]="true"></app-send-receive-messages>
-            <app-send-receive-messages [me]="true"></app-send-receive-messages>
-            <app-send-receive-messages></app-send-receive-messages>
-            <app-send-receive-messages></app-send-receive-messages>
+            <ng-container *ngFor="let message of conversation; let i = index">
+              <app-send-receive-messages [message]="(message?.text)?(message?.text):'File'"
+                                         [name]="getDisplayName(message.personEmail)"
+                                         [time]="formatLastActivity(message?.created)"></app-send-receive-messages>
+            </ng-container>
           </div>
           <div class="message-input">
             <div class="options">
               <button (click)="clickVideoCall()" class="video">
-                <app-icon [faIconString]="IconConstant.CONTACT_VIDEO"></app-icon>
+                <img src="./assets/images/icons/icon-video.png" alt="video icon">
               </button>
               <button (click)="clickAudioCall()" class="audio">
-                <app-icon [faIconString]="IconConstant.CONTACT_PHONE"></app-icon>
+                <img src="./assets/images/icons/icon-audio.png" alt="audio icon">
               </button>
             </div>
             <div class="input-box">
               <button class="attachment">
-                <app-icon [faIconString]="IconConstant.FILE_ATTACHE"></app-icon>
+                <img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">
               </button>
               <textarea placeholder="Add Your Message Here" style="overflow: hidden;"></textarea>
             </div>

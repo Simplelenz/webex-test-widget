@@ -2,17 +2,21 @@
   <div id="conversion-panel" class="panel">
     <div class="panel_wrapper">
       <div class="search_action">
-        <app-search-bar></app-search-bar>
+        <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
-        <button class="create_new">New&nbsp;<app-icon [faIconString]="IconConstant.CONTACT_PLUS"></app-icon>
+        <button (click)="clickNew()" class="create_new">New&nbsp;<app-icon
+          [faIconString]="IconConstant.CONTACT_PLUS"></app-icon>
         </button>
         <div class="results_box">
           <div class="results-view">
             <ul>
-              <app-contact [isConversationPanel]="true"></app-contact>
-              <app-contact [isConversationPanel]="true"></app-contact>
-              <app-contact [isConversationPanel]="true"></app-contact>
+              <ng-container *ngFor="let contact of conversationList|filter:term; let i = index">
+                <app-contact (click)="selectConversation(contact)" [isConversationPanel]="true" [name]="contact?.title"
+                             [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "
+                             [dateTime]="formatLastActivity(contact?.lastActivity)"
+                             (clickCancelFunction)="clickCancelFunctionEmit(contact)"></app-contact>
+              </ng-container>
             </ul>
           </div>
         </div>

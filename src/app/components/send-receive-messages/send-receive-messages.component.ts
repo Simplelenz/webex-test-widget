@@ -8,9 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SendReceiveMessagesComponent implements OnInit {
 
   @Input() me = false;
-  @Input() message = 'Hi Buddies, How are you?';
-  @Input() name = 'Andrew Bett';
-  @Input() time = '10:03 AM';
+  @Input() message = '';
+  @Input() name = '';
+  @Input() time = '';
 
   constructor() {
   }

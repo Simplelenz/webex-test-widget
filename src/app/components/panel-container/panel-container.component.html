@@ -21,14 +21,17 @@
           <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
                               (tabChange)="changePanel($event)"
                               (goBackPanel)="goBackPanelFunction()"></app-navigation-bar>
-          <app-conversation-panel *ngIf="panel == tab.CONVERSATION"></app-conversation-panel>
-          <app-contact-panel *ngIf="panel == tab.CONTACTS"
+          <app-conversation-panel *ngIf="panel == tab.CONVERSATION" [conversationList]="conversationList"
+                                  (clickNewFunction)="clickNewFunctionEmit()"
+                                  (viewConversation)="contact = $event; getConversation($event); getAllMembers($event)"></app-conversation-panel>
+          <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList"
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>
           <app-video-panel *ngIf="panel == tab.VIDEO"
                            (closeVideoCallFunction)="closeVideoCallFunctionEmit()"></app-video-panel>
           <app-audio-panel *ngIf="panel == tab.AUDIO"
                            (closeAudioCallFunction)="closeAudioCallFunctionEmit()"></app-audio-panel>
-          <app-message-panel *ngIf="panel == tab.MESSAGE"
+          <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"
+                             [contact]="contact"
                              (clickCallFunction)="clickCallFunctionEmit($event)"></app-message-panel>
         </div>
       </div>
