@@ -26,4 +26,20 @@ export class LoginService {
 
     return this.httpService.request(options);
   }
+
+  refreshAccessToken(grantType: string, clientId: string, clientSecret: string, refreshToken: string) {
+    const options = new RequestOptions;
+    options.url = URL.WEBEX_API_BASE + URL.ACCESS_TOKEN;
+    options.method = RequestMethod.Post;
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const params = new URLSearchParams();
+    params.append(Constant.GRANT_TYPE , grantType);
+    params.append(Constant.CLIENT_ID, clientId);
+    params.append(Constant.CLIENT_SECRET, clientSecret);
+    params.append(Constant.REFRESH_TOKEN, refreshToken);
+    options.body = params;
+
+    return this.httpService.request(options);
+  }
 }
