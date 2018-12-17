@@ -1,17 +1,26 @@
 <li>
-  <div class="result-row">
+  <div class="result-row" [ngClass]="selected?'checked':''">
     <p class="data">
-      <span><app-icon [faIconString]="icon"></app-icon></span>{{name}}
+      <span *ngIf="icon === IconConstant.DEFAULT_MULTIPLE_USER" class="icon">
+        <img src="./assets/images/icons/icon-conversation.png" alt="conversation icon">
+      </span>
+      <span *ngIf="icon === IconConstant.DEFAULT_SINGLE_USER" class="icon">
+        <img src="./assets/images/icons/icon-contact.png" alt="contact icon">
+      </span>
+      <span class="name">{{name}}</span>
     </p>
     <p class="action">
       <button class="view">
-        <app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>
-        <app-icon *ngIf="!isConversationPanel" [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
+        <span *ngIf="isConversationPanel" class="navigate"></span>
+        <span *ngIf="!isConversationPanel" class="mark"></span>
+        <!--<app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>-->
+        <!--<app-icon *ngIf="!isConversationPanel" [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>-->
       </button>
-      <button class="cancel">
-        <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
+      <button (click)="clickCancel()" class="cancel">
+        <img src="./assets/images/icons/icon-close-xs.png" alt="close icon">
+        <!--<app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>-->
       </button>
     </p>
   </div>
-  <span class="create-time">{{(dateTime)? dateTime: ''}}</span>
+  <span class="create-time">{{dateTime| date:'medium' }}</span>
 </li>

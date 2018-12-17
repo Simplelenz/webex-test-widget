@@ -30,6 +30,8 @@ export class AuthComponent implements OnInit {
   }
 
   handleExternalAuth() {
+    this.isAuthenticated = localStorage.getItem(Constant.IS_AUTHENTICATED) === 'true' ? true : false;
+
     if (localStorage.getItem(Constant.IS_WEBEX_LOGIN_DIRECTED)) {
       this.isWebexLoginDirected = localStorage.getItem(Constant.IS_WEBEX_LOGIN_DIRECTED) === 'true' ? true : false;
     } else {
@@ -45,7 +47,7 @@ export class AuthComponent implements OnInit {
     if (this.isWebexLoginDirected) {
       this.authCode = this.getAuthCode();
     }
-    if (this.authCode) {
+    if (this.authCode && !this.isAuthenticated) {
       this.getAccessToken();
     }
   }
@@ -66,6 +68,7 @@ export class AuthComponent implements OnInit {
         subscription.unsubscribe();
         try {
           this.isAuthenticated = JSON.parse(response['_body']).access_token ? true : false;
+          localStorage.setItem(Constant.IS_AUTHENTICATED, this.isAuthenticated.toString());
           localStorage.setItem(Constant.WEBEX_TOKENS, response['_body']);
         } catch (error) {
           console.error(error);

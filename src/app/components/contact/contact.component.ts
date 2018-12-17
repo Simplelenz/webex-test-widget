@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {IconConstant} from '../../configurations/IconConstants';
 
 @Component({
@@ -8,10 +8,13 @@ import {IconConstant} from '../../configurations/IconConstants';
 })
 export class ContactComponent implements OnInit {
 
-  @Input() name = 'No Name';
+  @Input() name = '';
   @Input() isConversationPanel = false;
-  @Input() icon: string = IconConstant.DEFAULT_MULTIPLE_USER;
-  @Input() dateTime = '2018/12/13 3:53PM';
+  @Input() icon;
+  @Input() dateTime = '';
+  @Input() selected = false;
+
+  @Output() clickCancelFunction: EventEmitter<any> = new EventEmitter<any>();
 
   IconConstant: any = IconConstant;
 
@@ -21,4 +24,7 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
   }
 
+  clickCancel() {
+    this.clickCancelFunction.emit();
+  }
 }

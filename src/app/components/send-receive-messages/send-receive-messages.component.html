@@ -1,6 +1,6 @@
 <div class="chat-view_row" [ngClass]="me?'me':'others'">
   <div class="message">
-    <p class="info">{{me? 'me' : name}}<span>{{time}}</span></p>
+    <p class="info">{{me? 'me' : name}}<span>{{time | date:'medium' }}</span></p>
     <p class="words">{{message}}</p>
   </div>
 </div>

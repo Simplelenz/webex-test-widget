@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
+import {RequestMethod, RequestOptions} from "@angular/http";
+import {URL} from "../../configurations/UrlConstants";
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'app-panel-container',
@@ -18,8 +21,19 @@ export class PanelContainerComponent implements OnInit {
   showPopUp = false;
   visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
   activatedTab = this.tab.CONVERSATION;
+  contactList: any = [];
+  conversationList: any = [];
+  conversation: any = [];
+  members: any = [];
+  contact: any;
 
-  constructor() {
+  constructor(private httpService: HttpService) {
+    if (this.contactList.length === 0) {
+      this.getAllContacts();
+    }
+    if (this.conversationList.length === 0) {
+      this.getAllConversations();
+    }
   }
 
   ngOnInit() {
@@ -85,4 +99,65 @@ export class PanelContainerComponent implements OnInit {
     this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
     this.panel = this.activatedTab = this.tab.MESSAGE;
   }
+
+  clickNewFunctionEmit() {
+    this.visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
+    this.panel = this.activatedTab = this.tab.CONTACTS;
+  }
+
+  getAllContacts() {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + URL.ROOMS;
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.contactList = temp.items;
+    }), error => {
+      console.log(error);
+    });
+  }
+
+  getAllConversations() {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + URL.ROOMS;
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.conversationList = temp.items;
+    }), error => {
+      console.log(error);
+    });
+  }
+
+  getConversation(contact) {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.MESSAGES).replace('{roomId}', contact.id);
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.conversation = temp.items;
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+      this.panel = this.activatedTab = this.tab.MESSAGE;
+    }), error => {
+      console.log(error);
+    });
+  }
+
+  getAllMembers(contact) {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.MEMBERSHIPS).replace('{roomId}', contact.id);
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.members = temp.items;
+      console.log(this.members);
+    }), error => {
+      console.log(error);
+    });
+  }
 }
+

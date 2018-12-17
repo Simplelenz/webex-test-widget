@@ -1,9 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MockService} from '../../services/mock.service';
 import {IconConstant} from '../../configurations/IconConstants';
-import {URL} from '../../configurations/UrlConstants';
-import {HttpService} from '../../services/http.service';
-import {RequestMethod, RequestOptions} from '@angular/http';
 
 @Component({
   selector: 'app-contact-panel',
@@ -13,23 +10,21 @@ import {RequestMethod, RequestOptions} from '@angular/http';
 export class ContactPanelComponent implements OnInit {
 
   @Output() clickDoneFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Input() contactList: any = [];
 
   IconConstant = IconConstant;
-  contactList: any = [];
   term = '';
   selectedContactList: any = [];
 
-  constructor(private mockService: MockService, private httpService: HttpService) {
-    mockService.getMockJson('mocks/contacts.json').subscribe((response => {
-      this.contactList = response;
-    }), error => {
-      console.log(error);
-    });
+  constructor(private mockService: MockService) {
+    // mockService.getMockJson('mocks/contacts.json').subscribe((response => {
+    //   this.contactList = response;
+    // }), error => {
+    //   console.log(error);
+    // });
   }
 
   ngOnInit() {
-    this.selectedContactList = [];
-    this.getAllContacts();
   }
 
   selectContact(i, contact) {
@@ -38,6 +33,7 @@ export class ContactPanelComponent implements OnInit {
 
     this.selectedContactList.forEach(item => {
       if (contact === item) {
+        this.selectedContactList.splice(this.selectedContactList.indexOf(contact), 1);
         temp = false;
       }
     });
@@ -56,19 +52,17 @@ export class ContactPanelComponent implements OnInit {
     }
   }
 
-  getAllContacts() {
-    const options = new RequestOptions();
-    options.url = URL.WEBEX_API_BASE + 'v1/rooms';
-    options.method = RequestMethod.Get;
-
-    this.httpService.request(options).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
+  isSelectedContact(contact): any {
+    let temp = false;
+    this.selectedContactList.forEach(item => {
+      if (contact === item) {
+        temp = true;
       }
-    );
+    });
+    return temp;
+  }
 
+  formatLastActivity(UTC): any {
+    return new Date(UTC);
   }
 }

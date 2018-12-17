@@ -5,15 +5,16 @@
         <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
-        <button (click)="clickDone()" class="create_new">Done&nbsp;<app-icon [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
+        <button (click)="clickDone()" class="create_new">Done&nbsp;<app-icon
+          [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
         </button>
         <div class="results_box">
           <div class="results-view">
             <ul>
               <ng-container *ngFor="let contact of contactList|filter:term; let i = index">
-                <app-contact (click)="selectContact(i,contact)"
-                             [icon]="(contact?.icon)? contact.icon : IconConstant.DEFAULT_ICON "
-                             [name]="contact?.name" [dateTime]="contact?.dateTime"></app-contact>
+                <app-contact (click)="selectContact(i,contact)" [selected]="isSelectedContact(contact)"
+                             [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "
+                             [name]="contact?.title"></app-contact>
               </ng-container>
             </ul>
           </div>
