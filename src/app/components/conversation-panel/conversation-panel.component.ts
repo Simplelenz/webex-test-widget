@@ -13,6 +13,7 @@ export class ConversationPanelComponent implements OnInit {
   @Input() conversationList: any = [];
   @Output() clickNewFunction: EventEmitter<any> = new EventEmitter<any>();
   @Output() viewConversation: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteConversation: EventEmitter<any> = new EventEmitter<any>();
 
   IconConstant: any = IconConstant;
   term = '';
@@ -38,7 +39,7 @@ export class ConversationPanelComponent implements OnInit {
   }
 
   clickCancelFunctionEmit(contact) {
-    console.log(contact);
+    this.deleteConversation.emit(contact);
   }
 
   selectConversation(contact) {

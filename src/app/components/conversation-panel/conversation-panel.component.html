@@ -12,7 +12,8 @@
           <div class="results-view">
             <ul>
               <ng-container *ngFor="let contact of conversationList|filter:term; let i = index">
-                <app-contact (click)="selectConversation(contact)" [isConversationPanel]="true" [name]="contact?.title"
+                <app-contact (clickViewSelectFunction)="selectConversation(contact)" [isConversationPanel]="true"
+                             [name]="contact?.title"
                              [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "
                              [dateTime]="formatLastActivity(contact?.lastActivity)"
                              (clickCancelFunction)="clickCancelFunctionEmit(contact)"></app-contact>

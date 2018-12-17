@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
-import {RequestMethod, RequestOptions} from "@angular/http";
-import {URL} from "../../configurations/UrlConstants";
-import {HttpService} from "../../services/http.service";
+import {RequestMethod, RequestOptions} from '@angular/http';
+import {URL} from '../../configurations/UrlConstants';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-panel-container',
@@ -19,6 +19,7 @@ export class PanelContainerComponent implements OnInit {
   tab: any = TAB;
   panel = this.tab.CONVERSATION;
   showPopUp = false;
+  showDeletePopUp = false;
   visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
   activatedTab = this.tab.CONVERSATION;
   contactList: any = [];
@@ -154,9 +155,36 @@ export class PanelContainerComponent implements OnInit {
     this.httpService.request(options).subscribe((response => {
       const temp: any = JSON.parse(response['_body']);
       this.members = temp.items;
-      console.log(this.members);
     }), error => {
       console.log(error);
+    });
+  }
+
+  deleteConversationFunction(state) {
+    if (state) {
+      this.deleteConversation(this.contact);
+    } else {
+      this.showDeletePopUp = false;
+    }
+
+  }
+
+  deleteConversationEmit(contact) {
+    this.contact = contact;
+  }
+
+  deleteConversation(contact) {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.DELETE_ROOMS).replace('{roomId}', contact.id);
+    options.method = RequestMethod.Delete;
+
+    this.httpService.request(options).subscribe((response => {
+      this.getAllConversations();
+      this.getAllContacts();
+      this.showDeletePopUp = false;
+    }), error => {
+      console.log(error);
+      this.showDeletePopUp = false;
     });
   }
 }

@@ -27,6 +27,7 @@ import {MockService} from './services/mock.service';
 import {UtilService} from './services/util.service';
 import {SendReceiveMessagesComponent} from './components/send-receive-messages/send-receive-messages.component';
 import { ReversePipePipe } from './pipes/reverse-pipe.pipe';
+import { DeleteConversationPopupComponent } from './components/delete-conversation-popup/delete-conversation-popup.component';
 
 
 const appRoutes: Routes = [];
@@ -50,6 +51,7 @@ const appRoutes: Routes = [];
     FrontierWidgetComponent,
     SendReceiveMessagesComponent,
     ReversePipePipe,
+    DeleteConversationPopupComponent,
   ],
   imports: [
     BrowserModule,

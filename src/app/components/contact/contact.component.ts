@@ -15,6 +15,7 @@ export class ContactComponent implements OnInit {
   @Input() selected = false;
 
   @Output() clickCancelFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clickViewSelectFunction: EventEmitter<any> = new EventEmitter<any>();
 
   IconConstant: any = IconConstant;
 
@@ -26,5 +27,9 @@ export class ContactComponent implements OnInit {
 
   clickCancel() {
     this.clickCancelFunction.emit();
+  }
+
+  clickViewSelect() {
+    this.clickViewSelectFunction.emit();
   }
 }

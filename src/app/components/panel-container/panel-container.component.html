@@ -16,6 +16,8 @@
       </div>
       <div class="content">
         <div class="content-wrap">
+          <app-delete-conversation-popup *ngIf="showDeletePopUp"
+                                         (deletePopUpFunction)="deleteConversationFunction($event)"></app-delete-conversation-popup>
           <app-conversation-name-popup *ngIf="showPopUp"
                                        (popUpFunction)="popUpFunctionEmit($event)"></app-conversation-name-popup>
           <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
@@ -23,6 +25,7 @@
                               (goBackPanel)="goBackPanelFunction()"></app-navigation-bar>
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION" [conversationList]="conversationList"
                                   (clickNewFunction)="clickNewFunctionEmit()"
+                                  (deleteConversation)="showDeletePopUp = true; deleteConversationEmit($event);"
                                   (viewConversation)="contact = $event; getConversation($event); getAllMembers($event)"></app-conversation-panel>
           <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList"
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>

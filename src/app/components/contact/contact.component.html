@@ -10,7 +10,7 @@
       <span class="name">{{name}}</span>
     </p>
     <p class="action">
-      <button class="view">
+      <button (click)="clickViewSelect()" class="view">
         <span *ngIf="isConversationPanel" class="navigate"></span>
         <span *ngIf="!isConversationPanel" class="mark"></span>
         <!--<app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>-->
