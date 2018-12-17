@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
+import {RequestMethod, RequestOptions} from '@angular/http';
+import {URL} from '../../configurations/UrlConstants';
 
 @Component({
   selector: 'app-message-panel',
@@ -17,6 +19,7 @@ export class MessagePanelComponent implements OnInit {
 
   tab: any = TAB;
   IconConstant: any = IconConstant;
+  newMessage: string;
 
   constructor(private httpService: HttpService) {
   }
@@ -44,5 +47,35 @@ export class MessagePanelComponent implements OnInit {
       }
     });
     return temp;
+  }
+
+  sendNewMessage(event) {
+    if (event.key === 'Enter' && this.newMessage) {
+
+      const options = new RequestOptions();
+      options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
+      options.method = RequestMethod.Post;
+      options.body = {'roomId': this.contact.id, text: this.newMessage};
+
+      this.httpService.request(options).subscribe((response => {
+        this.getConversation();
+      }), error => {
+        console.log(error);
+      });
+    }
+  }
+
+  getConversation() {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.MESSAGES).replace('{roomId}', this.contact.id);
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.conversation = temp.items;
+      this.newMessage = undefined;
+    }), error => {
+      console.log(error);
+    });
   }
 }

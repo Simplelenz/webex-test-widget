@@ -4,5 +4,6 @@ export namespace URL {
   export const ACCESS_TOKEN = 'v1/access_token';
   export const ROOMS = 'v1/rooms';
   export const MESSAGES = 'v1/messages?roomId={roomId}';
+  export const SEND_MESSAGE = 'v1/messages';
   export const MEMBERSHIPS = 'v1/memberships?roomId={roomId}';
 }

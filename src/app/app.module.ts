@@ -26,6 +26,7 @@ import {LoginService} from './services/login.service';
 import {MockService} from './services/mock.service';
 import {UtilService} from './services/util.service';
 import {SendReceiveMessagesComponent} from './components/send-receive-messages/send-receive-messages.component';
+import { ReversePipePipe } from './pipes/reverse-pipe.pipe';
 
 
 const appRoutes: Routes = [];
@@ -48,6 +49,7 @@ const appRoutes: Routes = [];
     FrontierOpenerComponent,
     FrontierWidgetComponent,
     SendReceiveMessagesComponent,
+    ReversePipePipe,
   ],
   imports: [
     BrowserModule,
