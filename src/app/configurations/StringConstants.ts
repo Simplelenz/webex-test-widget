@@ -10,6 +10,7 @@ export namespace Constant {
   export const REFRESH_TOKEN = 'refresh_token';
   export const BEARER = 'Bearer';
   export const IS_AUTHENTICATED = 'isAuthenticated';
+  export const AUTHORIZATION_HEADER = 'Authorization';
 }
 
 export namespace CONF {
