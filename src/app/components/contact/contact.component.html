@@ -16,7 +16,7 @@
         <!--<app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>-->
         <!--<app-icon *ngIf="!isConversationPanel" [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>-->
       </button>
-      <button (click)="clickCancel()" class="cancel">
+      <button *ngIf="isConversationPanel" (click)="clickCancel()" class="cancel">
         <img src="./assets/images/icons/icon-close-xs.png" alt="close icon">
         <!--<app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>-->
       </button>

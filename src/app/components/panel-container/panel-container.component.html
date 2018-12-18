@@ -21,13 +21,13 @@
           <app-conversation-name-popup *ngIf="showPopUp"
                                        (popUpFunction)="popUpFunctionEmit($event)"></app-conversation-name-popup>
           <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
-                              (tabChange)="changePanel($event)"
-                              (goBackPanel)="goBackPanelFunction()"></app-navigation-bar>
+                              (tabChange)="changePanel($event); showDoneButton = false;"
+                              (goBackPanel)="goBackPanelFunction(); showDoneButton = false;"></app-navigation-bar>
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION" [conversationList]="conversationList"
-                                  (clickNewFunction)="clickNewFunctionEmit()"
+                                  (clickNewFunction)="clickNewFunctionEmit(); showDoneButton = true;"
                                   (deleteConversation)="showDeletePopUp = true; deleteConversationEmit($event);"
                                   (viewConversation)="contact = $event; getConversation($event); getAllMembers($event)"></app-conversation-panel>
-          <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList"
+          <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList" [showDoneButton]="showDoneButton"
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>
           <app-video-panel *ngIf="panel == tab.VIDEO"
                            (closeVideoCallFunction)="closeVideoCallFunctionEmit()"></app-video-panel>

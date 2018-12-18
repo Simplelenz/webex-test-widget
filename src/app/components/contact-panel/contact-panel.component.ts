@@ -11,6 +11,7 @@ export class ContactPanelComponent implements OnInit {
 
   @Output() clickDoneFunction: EventEmitter<any> = new EventEmitter<any>();
   @Input() contactList: any = [];
+  @Input() showDoneButton = false;
 
   IconConstant = IconConstant;
   term = '';
