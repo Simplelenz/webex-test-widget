@@ -5,7 +5,7 @@
       <div class="head">
         <div class="head_action">
           <ul>
-            <li class="name"><p>{{userName}}</p></li>
+            <li *ngIf="userName" class="name"><p>{{userName}}</p></li>
             <li class="close">
               <button (click)="clickClose()">
                 <app-icon [faIconString]="IconConstant.CLOSE"></app-icon>

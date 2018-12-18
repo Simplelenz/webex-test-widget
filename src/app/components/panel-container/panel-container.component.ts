@@ -12,7 +12,8 @@ import {HttpService} from '../../services/http.service';
 })
 export class PanelContainerComponent implements OnInit {
 
-  @Input() userName = 'Hello Kevin';
+  @Input() userName = '';
+  @Input() email: string;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
   IconConstant: any = IconConstant;
@@ -28,6 +29,7 @@ export class PanelContainerComponent implements OnInit {
   members: any = [];
   contact: any;
   showDoneButton = false;
+  myDetails: any;
 
   constructor(private httpService: HttpService) {
     if (this.contactList.length === 0) {
@@ -39,6 +41,7 @@ export class PanelContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPeopleDetails(this.email);
   }
 
   clickClose() {
@@ -55,6 +58,9 @@ export class PanelContainerComponent implements OnInit {
       this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
       this.panel = this.tab.MESSAGE;
       this.activatedTab = this.tab.MESSAGE;
+      this.contact = (popUpData.contactList[0]);
+      this.getConversation(this.contact);
+      this.getAllMembers(this.contact);
     }
   }
 
@@ -186,6 +192,20 @@ export class PanelContainerComponent implements OnInit {
     }), error => {
       console.log(error);
       this.showDeletePopUp = false;
+    });
+  }
+
+  getPeopleDetails(email) {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.PEOPLE).replace('{email}', email);
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.myDetails = temp.items[0];
+      this.userName = temp.items[0].displayName;
+    }), error => {
+      console.log(error);
     });
   }
 }
