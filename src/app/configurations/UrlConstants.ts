@@ -7,5 +7,6 @@ export namespace URL {
   export const MESSAGES = 'v1/messages?roomId={roomId}';
   export const SEND_MESSAGE = 'v1/messages';
   export const MEMBERSHIPS = 'v1/memberships?roomId={roomId}';
+  export const CREATE_MEMBERSHIPS = 'v1/memberships';
   export const PEOPLE = 'v1/people?email={email}';
 }
