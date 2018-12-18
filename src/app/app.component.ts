@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {MockService} from "./services/mock.service";
+import { MockService } from './services/mock.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,8 @@ export class AppComponent implements OnInit {
   @ViewChild('viewAudioElem') viewAudioElem: ElementRef;
   @ViewChild('viewVideoElem') viewVideoElem: ElementRef;
 
-  constructor(private ms:MockService){
-    ms.getMockJson('mocks/conversations.json')
+  constructor(private ms: MockService, private dataService: DataService) {
+    ms.getMockJson('mocks/conversations.json');
   }
 
   ngOnInit(): void {
@@ -46,7 +47,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  connect() {
+  initSpark() {
+    this.spark = this.dataService.getSpark();
     if (!this.spark) {
       this.spark = ciscospark.init({
         config: {
@@ -63,7 +65,12 @@ export class AppComponent implements OnInit {
           access_token: this.accessToken
         }
       });
+      this.dataService.setSpark(this.spark);
     }
+  }
+
+  connect() {
+    this.initSpark();
 
     if (!this.spark.phone.registered) {
       // we want to start listening for incoming calls *before* registering with
