@@ -18,9 +18,10 @@
       <div class="results">
         <div class="results_box">
           <div #list class="chat-view" [scrollTop]="list.scrollHeight">
+            <app-loader *ngIf="conversation.length == 0"></app-loader>
             <ng-container *ngFor="let message of conversation | reversePipe; let i = index">
               <app-send-receive-messages [me]="(message?.personEmail == email)? true : false"
-                                         [message]="(message?.text)?(message?.text):'File'"
+                                         [message]="(message?.text)?(message?.text):'*File*'"
                                          [name]="getDisplayName(message.personEmail)"
                                          [time]="formatLastActivity(message?.created)"></app-send-receive-messages>
             </ng-container>
@@ -34,10 +35,17 @@
                 <img src="./assets/images/icons/icon-audio.png" alt="audio icon">
               </button>
             </div>
-            <div class="input-box">
-              <button class="attachment">
-                <img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">
-              </button>
+            <div class="attachment">
+              <div class="image-upload">
+                <label for="file-input">
+                  <img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">
+                </label>
+
+                <input id="file-input" type="file"/>
+              </div>
+              <!--<button class="attachment">-->
+              <!--<img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">-->
+              <!--</button>-->
               <input [(ngModel)]="newMessage" (keydown)="sendNewMessage($event)" placeholder="Add Your Message Here"
                      style="overflow: hidden;">
             </div>

@@ -10,6 +10,7 @@
         </button>
         <div class="results_box">
           <div class="results-view">
+            <app-loader *ngIf="conversationList.length == 0"></app-loader>
             <ul>
               <ng-container *ngFor="let contact of conversationList|filter:term; let i = index">
                 <app-contact (clickViewSelectFunction)="selectConversation(contact)"

@@ -4,7 +4,6 @@ import {TAB} from '../navigation-bar/tabs.enum';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 import {HttpService} from '../../services/http.service';
-import {interval} from "rxjs/observable/interval";
 
 @Component({
   selector: 'app-panel-container',
@@ -61,10 +60,7 @@ export class PanelContainerComponent implements OnInit {
       this.panel = this.tab.MESSAGE;
       this.activatedTab = this.tab.MESSAGE;
       this.contact = (popUpData.contactList[0]);
-      const stream = interval(1000);
-      stream.subscribe(() => {
-        this.getConversation(this.contact);
-      });
+      this.getConversation(this.contact);
       this.getAllMembers(this.contact);
     }
   }

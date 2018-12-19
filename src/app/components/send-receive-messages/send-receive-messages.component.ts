@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-send-receive-messages',
@@ -12,10 +12,15 @@ export class SendReceiveMessagesComponent implements OnInit {
   @Input() name = '';
   @Input() time = '';
 
+  @Output() clickAttachmentButton: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() {
   }
 
   ngOnInit() {
   }
 
+  clickAttachment() {
+    this.clickAttachmentButton.emit();
+  }
 }

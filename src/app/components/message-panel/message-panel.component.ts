@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
-import {interval} from 'rxjs/observable/interval';
 
 @Component({
   selector: 'app-message-panel',
@@ -60,10 +59,7 @@ export class MessagePanelComponent implements OnInit {
       options.body = {'roomId': this.contact.id, text: this.newMessage};
 
       this.httpService.request(options).subscribe((response => {
-        const stream = interval(1000);
-        stream.subscribe(() => {
-          this.getConversation();
-        });
+        this.getConversation();
       }), error => {
         console.log(error);
       });
