@@ -1,5 +1,5 @@
 <li>
-  <div class="result-row" [ngClass]="selected?'checked':''">
+  <div class="result-row" [ngClass]="(selected && showCheckButton)?'checked':''">
     <p class="data">
       <span *ngIf="icon === IconConstant.DEFAULT_MULTIPLE_USER" class="icon">
         <img src="./assets/images/icons/icon-conversation.png" alt="conversation icon">
@@ -12,7 +12,7 @@
     <p class="action">
       <button (click)="clickViewSelect()" class="view">
         <span *ngIf="isConversationPanel" class="navigate"></span>
-        <span *ngIf="!isConversationPanel" class="mark"></span>
+        <span *ngIf="!isConversationPanel && showCheckButton" class="mark"></span>
         <!--<app-icon *ngIf="isConversationPanel" [faIconString]="IconConstant.CONTACT_VIEW"></app-icon>-->
         <!--<app-icon *ngIf="!isConversationPanel" [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>-->
       </button>
