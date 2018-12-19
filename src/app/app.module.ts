@@ -28,6 +28,7 @@ import {UtilService} from './services/util.service';
 import {SendReceiveMessagesComponent} from './components/send-receive-messages/send-receive-messages.component';
 import { ReversePipePipe } from './pipes/reverse-pipe.pipe';
 import { DeleteConversationPopupComponent } from './components/delete-conversation-popup/delete-conversation-popup.component';
+import { DataService } from './services/data.service';
 import { LoaderComponent } from './components/loader/loader.component';
 
 
@@ -69,7 +70,8 @@ const appRoutes: Routes = [];
     LoginService,
     HttpService,
     ConfigService,
-    MockService
+    MockService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })
