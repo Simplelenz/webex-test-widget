@@ -12,7 +12,7 @@
           <div class="results-view">
             <ul>
               <ng-container *ngFor="let contact of conversationList|filter:term; let i = index">
-                <app-contact *ngIf="contact.type == 'group'" (clickViewSelectFunction)="selectConversation(contact)"
+                <app-contact (clickViewSelectFunction)="selectConversation(contact)"
                              [isConversationPanel]="true"
                              [name]="contact?.title"
                              [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "

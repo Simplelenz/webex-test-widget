@@ -17,7 +17,7 @@
       </div>
       <div class="results">
         <div class="results_box">
-          <div class="chat-view">
+          <div #list class="chat-view" [scrollTop]="list.scrollHeight">
             <ng-container *ngFor="let message of conversation | reversePipe; let i = index">
               <app-send-receive-messages [me]="(message?.personEmail == email)? true : false"
                                          [message]="(message?.text)?(message?.text):'File'"
