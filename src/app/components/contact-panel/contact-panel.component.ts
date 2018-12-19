@@ -10,6 +10,7 @@ import {IconConstant} from '../../configurations/IconConstants';
 export class ContactPanelComponent implements OnInit {
 
   @Output() clickDoneFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectedContacts: EventEmitter<any> = new EventEmitter<any>();
   @Input() contactList: any = [];
   @Input() showDoneButton = false;
 
@@ -41,6 +42,7 @@ export class ContactPanelComponent implements OnInit {
     if (temp) {
       this.selectedContactList.push(contact);
     }
+    this.selectedContacts.emit(this.selectedContactList);
   }
 
   clickDone() {

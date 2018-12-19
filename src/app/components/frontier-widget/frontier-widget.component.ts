@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, Input} from '@angular/core';
 
 @Component({
   selector: 'app-frontier-widget',
@@ -7,9 +7,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FrontierWidgetComponent implements OnInit {
 
-  showPanelContainer: boolean = false;
+  @Input() email: string;
+  showPanelContainer = false;
 
-  constructor() {
+  constructor(private elm: ElementRef) {
+    this.email = elm.nativeElement.getAttribute('email');
   }
 
   ngOnInit() {

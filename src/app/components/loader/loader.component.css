@@ -1,0 +1,10 @@
+.Aligner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.Aligner img {
+  width: 50px;
+}

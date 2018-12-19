@@ -5,7 +5,7 @@
         <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
-        <button *ngIf="showDoneButton" (click)="clickDone()" class="create_new">Done&nbsp;<app-icon
+        <button *ngIf="showDoneButton && selectedContactList.length > 0" (click)="clickDone()" class="create_new">Done&nbsp;<app-icon
           [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
         </button>
         <div class="results_box">
@@ -13,6 +13,7 @@
             <ul>
               <ng-container *ngFor="let contact of contactList|filter:term; let i = index">
                 <app-contact *ngIf="contact.type == 'direct'" (click)="selectContact(i,contact)"
+                             [showCheckButton]="showDoneButton"
                              [selected]="isSelectedContact(contact)"
                              [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "
                              [name]="contact?.title"></app-contact>

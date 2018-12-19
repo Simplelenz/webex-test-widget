@@ -13,6 +13,7 @@ export class ContactComponent implements OnInit {
   @Input() icon;
   @Input() dateTime = '';
   @Input() selected = false;
+  @Input() showCheckButton = false;
 
   @Output() clickCancelFunction: EventEmitter<any> = new EventEmitter<any>();
   @Output() clickViewSelectFunction: EventEmitter<any> = new EventEmitter<any>();

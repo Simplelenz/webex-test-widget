@@ -10,9 +10,10 @@
         </button>
         <div class="results_box">
           <div class="results-view">
+            <app-loader *ngIf="conversationList.length == 0"></app-loader>
             <ul>
               <ng-container *ngFor="let contact of conversationList|filter:term; let i = index">
-                <app-contact *ngIf="contact.type == 'group'" (clickViewSelectFunction)="selectConversation(contact)"
+                <app-contact (clickViewSelectFunction)="selectConversation(contact)"
                              [isConversationPanel]="true"
                              [name]="contact?.title"
                              [icon]="(contact?.type == 'direct')? IconConstant.DEFAULT_SINGLE_USER : IconConstant.DEFAULT_MULTIPLE_USER "
