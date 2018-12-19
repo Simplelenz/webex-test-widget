@@ -5,7 +5,7 @@
       <div class="head">
         <div class="head_action">
           <ul>
-            <li class="name"><p>{{userName}}</p></li>
+            <li *ngIf="userName" class="name"><p>{{userName}}</p></li>
             <li class="close">
               <button (click)="clickClose()">
                 <app-icon [faIconString]="IconConstant.CLOSE"></app-icon>
@@ -28,12 +28,14 @@
                                   (deleteConversation)="showDeletePopUp = true; deleteConversationEmit($event);"
                                   (viewConversation)="contact = $event; getConversation($event); getAllMembers($event)"></app-conversation-panel>
           <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList" [showDoneButton]="showDoneButton"
-                             (clickDoneFunction)="clickDoneFunctionEmit($event)"></app-contact-panel>
+                             (clickDoneFunction)="clickDoneFunctionEmit($event)"
+                             (selectedContacts)="selectedContacts = $event"></app-contact-panel>
           <app-video-panel *ngIf="panel == tab.VIDEO"
                            (closeVideoCallFunction)="closeVideoCallFunctionEmit()"></app-video-panel>
           <app-audio-panel *ngIf="panel == tab.AUDIO"
                            (closeAudioCallFunction)="closeAudioCallFunctionEmit()"></app-audio-panel>
           <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"
+                             [email]="email"
                              [contact]="contact"
                              (clickCallFunction)="clickCallFunctionEmit($event)"></app-message-panel>
         </div>

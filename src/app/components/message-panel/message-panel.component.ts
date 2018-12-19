@@ -15,6 +15,7 @@ export class MessagePanelComponent implements OnInit {
   @Input() conversation: any = [];
   @Input() members: any = [];
   @Input() contact: any;
+  @Input() email: string;
   @Output() clickCallFunction: EventEmitter<any> = new EventEmitter<any>();
 
   tab: any = TAB;

@@ -19,7 +19,8 @@
         <div class="results_box">
           <div class="chat-view">
             <ng-container *ngFor="let message of conversation | reversePipe; let i = index">
-              <app-send-receive-messages [message]="(message?.text)?(message?.text):'File'"
+              <app-send-receive-messages [me]="(message?.personEmail == email)? true : false"
+                                         [message]="(message?.text)?(message?.text):'File'"
                                          [name]="getDisplayName(message.personEmail)"
                                          [time]="formatLastActivity(message?.created)"></app-send-receive-messages>
             </ng-container>
