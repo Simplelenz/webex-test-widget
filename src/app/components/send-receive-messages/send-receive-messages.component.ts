@@ -11,6 +11,7 @@ export class SendReceiveMessagesComponent implements OnInit {
   @Input() message = '';
   @Input() name = '';
   @Input() time = '';
+  @Input() object: any;
 
   @Output() clickAttachmentButton: EventEmitter<any> = new EventEmitter<any>();
 

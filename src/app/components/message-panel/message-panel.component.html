@@ -21,6 +21,7 @@
             <app-loader *ngIf="conversation.length == 0"></app-loader>
             <ng-container *ngFor="let message of conversation | reversePipe; let i = index">
               <app-send-receive-messages [me]="(message?.personEmail == email)? true : false"
+                                         [object]="message"
                                          [message]="(message?.text)?(message?.text):'*File*'"
                                          [name]="getDisplayName(message.personEmail)"
                                          [time]="formatLastActivity(message?.created)"></app-send-receive-messages>
