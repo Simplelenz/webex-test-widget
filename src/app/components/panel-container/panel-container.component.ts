@@ -31,6 +31,7 @@ export class PanelContainerComponent implements OnInit {
   showDoneButton = false;
   myDetails: any;
   selectedContacts: any = [];
+  newConversation = false;
 
   constructor(private httpService: HttpService) {
     if (this.contactList.length === 0) {

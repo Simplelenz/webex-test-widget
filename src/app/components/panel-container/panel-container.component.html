@@ -22,9 +22,9 @@
                                        (popUpFunction)="popUpFunctionEmit($event)"></app-conversation-name-popup>
           <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
                               (tabChange)="changePanel($event); showDoneButton = false;"
-                              (goBackPanel)="goBackPanelFunction(); showDoneButton = false;"></app-navigation-bar>
+                              (goBackPanel)="goBackPanelFunction(); showDoneButton = false; newConversation = false;"></app-navigation-bar>
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION" [conversationList]="conversationList"
-                                  (clickNewFunction)="clickNewFunctionEmit(); showDoneButton = true;"
+                                  (clickNewFunction)="clickNewFunctionEmit(); showDoneButton = true; newConversation = true;"
                                   (deleteConversation)="showDeletePopUp = true; deleteConversationEmit($event);"
                                   (viewConversation)="contact = $event; getConversation($event); getAllMembers($event)"></app-conversation-panel>
           <app-contact-panel *ngIf="panel == tab.CONTACTS" [contactList]="contactList" [showDoneButton]="showDoneButton"
@@ -36,6 +36,7 @@
                            (closeAudioCallFunction)="closeAudioCallFunctionEmit()"></app-audio-panel>
           <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"
                              [email]="email"
+                             [newConversation]="newConversation"
                              [contact]="contact"
                              (clickCallFunction)="clickCallFunctionEmit($event)"></app-message-panel>
         </div>

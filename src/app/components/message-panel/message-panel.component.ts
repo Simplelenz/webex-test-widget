@@ -4,6 +4,7 @@ import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
+import * as base from 'base64-url';
 
 @Component({
   selector: 'app-message-panel',
@@ -16,6 +17,7 @@ export class MessagePanelComponent implements OnInit {
   @Input() members: any = [];
   @Input() contact: any;
   @Input() email: string;
+  @Input() newConversation = false;
   @Output() clickCallFunction: EventEmitter<any> = new EventEmitter<any>();
 
   tab: any = TAB;
@@ -75,6 +77,35 @@ export class MessagePanelComponent implements OnInit {
     this.httpService.request(options).subscribe((response => {
       const temp: any = JSON.parse(response['_body']);
       this.conversation = temp.items;
+    }), error => {
+      console.log(error);
+    });
+  }
+
+  chooseImageFile(event) {
+    if (event.target.files.item(0).type.split('/')[0]) {
+      console.log(event.target.files);
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        // this.sendFile(e.target.result);
+        // console.log(e.target.result);
+        // console.log(base.escape(e.target.result));
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error('unsupported file type :( ');
+    }
+  }
+
+  sendFile(path) {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
+    options.method = RequestMethod.Post;
+    options.body = {'files': path, 'roomId': this.contact.id, text: 'lakshitha'};
+
+    this.httpService.request(options).subscribe((response => {
+      this.getConversation();
     }), error => {
       console.log(error);
     });
