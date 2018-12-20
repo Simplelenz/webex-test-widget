@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IconConstant} from '../../configurations/IconConstants';
-import {TAB} from '../navigation-bar/tabs.enum';
-import {HttpService} from '../../services/http.service';
-import {RequestMethod, RequestOptions} from '@angular/http';
-import {URL} from '../../configurations/UrlConstants';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IconConstant } from '../../configurations/IconConstants';
+import { TAB } from '../navigation-bar/tabs.enum';
+import { HttpService } from '../../services/http.service';
+import { RequestMethod, RequestOptions, Headers } from '@angular/http';
+import { URL } from '../../configurations/UrlConstants';
 
 @Component({
   selector: 'app-message-panel',
@@ -21,6 +21,8 @@ export class MessagePanelComponent implements OnInit {
   tab: any = TAB;
   IconConstant: any = IconConstant;
   newMessage: string;
+  filePath: string;
+  fileType: string;
 
   constructor(private httpService: HttpService) {
   }
@@ -51,12 +53,12 @@ export class MessagePanelComponent implements OnInit {
   }
 
   sendNewMessage(event) {
-    if (event.key === 'Enter' && this.newMessage) {
+    if (event.key === 'Enter' && this.newMessage !== undefined && this.filePath === undefined) {
 
       const options = new RequestOptions();
       options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
       options.method = RequestMethod.Post;
-      options.body = {'roomId': this.contact.id, text: this.newMessage};
+      options.body = { 'roomId': this.contact.id, text: this.newMessage };
 
       this.httpService.request(options).subscribe((response => {
         this.getConversation();
@@ -64,6 +66,29 @@ export class MessagePanelComponent implements OnInit {
         console.log(error);
       });
       this.newMessage = undefined;
+    }
+
+    if (event.key === 'Enter' && this.filePath !== undefined) {
+      while (this.filePath.includes('\\')) {
+        this.filePath = this.filePath.replace('\\', '/');
+      }
+      const options = new RequestOptions();
+      options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
+      options.headers = new Headers();
+      options.headers.append('Content-Type', 'multipart/form-data');
+      options.method = RequestMethod.Post;
+      options.body = new FormData();
+      options.body.append('roomId', this.contact.id);
+      options.body.append('files', '@' + this.filePath + ';type=' + this.fileType);
+      // options.body = { 'roomId': this.contact.id, text: this.newMessage };
+
+      this.httpService.request(options).subscribe((response => {
+        this.getConversation();
+      }), error => {
+        console.log(error);
+      });
+      this.newMessage = undefined;
+      this.filePath = undefined;
     }
   }
 
@@ -78,5 +103,13 @@ export class MessagePanelComponent implements OnInit {
     }), error => {
       console.log(error);
     });
+  }
+
+  onFileChange(event) {
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.fileType = file.type;
+    }
   }
 }

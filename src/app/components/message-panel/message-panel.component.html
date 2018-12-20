@@ -41,7 +41,7 @@
                   <img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">
                 </label>
 
-                <input id="file-input" type="file"/>
+                <input [(ngModel)]="filePath" id="file-input" type="file" (change)="onFileChange($event)"/>
               </div>
               <!--<button class="attachment">-->
               <!--<img src="./assets/images/icons/icon-attachment.png" alt="attachment icon">-->
