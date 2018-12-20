@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, ElementRef, Input} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 
 @Component({
@@ -10,6 +10,9 @@ export class VideoPanelComponent implements OnInit {
 
   @Output() closeVideoCallFunction: EventEmitter<any> = new EventEmitter<any>();
   IconConstant: any = IconConstant;
+
+  @Input() @ViewChild('videoElem') videoElem: ElementRef;
+  @Input() @ViewChild('viewVideoElem') viewVideoElem: ElementRef;
 
   constructor() {
   }
