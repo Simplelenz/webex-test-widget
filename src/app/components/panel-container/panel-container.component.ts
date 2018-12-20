@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 import {HttpService} from '../../services/http.service';
-import { DataService } from '../../services/data.service';
+import {DataService} from '../../services/data.service';
+import {interval} from 'rxjs/observable/interval';
 
 @Component({
   selector: 'app-panel-container',
   templateUrl: './panel-container.component.html',
   styleUrls: ['./panel-container.component.css']
 })
-export class PanelContainerComponent implements OnInit {
+export class PanelContainerComponent implements OnInit, OnDestroy {
 
   @Input() userName = '';
   @Input() email: string;
@@ -26,7 +27,7 @@ export class PanelContainerComponent implements OnInit {
   panel = this.tab.CONVERSATION;
   showPopUp = false;
   showDeletePopUp = false;
-  visibleTabs = { CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false };
+  visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
   activatedTab = this.tab.CONVERSATION;
   contactList: any = [];
   conversationList: any = [];
@@ -42,6 +43,7 @@ export class PanelContainerComponent implements OnInit {
     audio: true,
     video: false
   };
+  tempInterval: any;
 
   constructor(private httpService: HttpService, private dataService: DataService) {
     if (this.contactList.length === 0) {
@@ -62,6 +64,10 @@ export class PanelContainerComponent implements OnInit {
     this.close.emit(false);
   }
 
+  ngOnDestroy() {
+    // this.terminateUpdating(this.tempInterval);
+  }
+
   changePanel(tabNum) {
     this.panel = tabNum;
   }
@@ -69,7 +75,7 @@ export class PanelContainerComponent implements OnInit {
   clickDoneFunctionEmit(popUpData) {
     this.showPopUp = popUpData.popUp;
     if (popUpData.contactList.length === 1) {
-      this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true };
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
       this.panel = this.tab.MESSAGE;
       this.activatedTab = this.tab.MESSAGE;
       this.contact = (popUpData.contactList[0]);
@@ -95,35 +101,35 @@ export class PanelContainerComponent implements OnInit {
       this.panel = this.activatedTab = this.tab.CONVERSATION;
     }
     if (this.panel === this.tab.VIDEO || this.panel === this.tab.AUDIO) {
-      this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true };
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
       this.panel = this.activatedTab = this.tab.MESSAGE;
     }
   }
 
   clickCallFunctionEmit(type) {
     if (type === this.tab.VIDEO) {
-      this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: true, AUDIO: false, MESSAGE: false };
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: true, AUDIO: false, MESSAGE: false};
       this.panel = this.activatedTab = this.tab.VIDEO;
     }
     if (type === this.tab.AUDIO) {
-      this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: true, MESSAGE: false };
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: true, MESSAGE: false};
       this.panel = this.activatedTab = this.tab.AUDIO;
       this.call();
     }
   }
 
   closeVideoCallFunctionEmit() {
-    this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true };
+    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
     this.panel = this.activatedTab = this.tab.MESSAGE;
   }
 
   closeAudioCallFunctionEmit() {
-    this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true };
+    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
     this.panel = this.activatedTab = this.tab.MESSAGE;
   }
 
   clickNewFunctionEmit() {
-    this.visibleTabs = { CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false };
+    this.visibleTabs = {CONVERSATION: true, CONTACTS: true, VIDEO: false, AUDIO: false, MESSAGE: false};
     this.panel = this.activatedTab = this.tab.CONTACTS;
   }
 
@@ -161,7 +167,7 @@ export class PanelContainerComponent implements OnInit {
     this.httpService.request(options).subscribe((response => {
       const temp: any = JSON.parse(response['_body']);
       this.conversation = temp.items;
-      this.visibleTabs = { CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true };
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
       this.panel = this.activatedTab = this.tab.MESSAGE;
     }), error => {
       console.log(error);
@@ -382,6 +388,16 @@ export class PanelContainerComponent implements OnInit {
     }
 
     return Promise.resolve();
+  }
+
+  startUpdating() {
+    this.tempInterval = interval(2000).subscribe(() => {
+      this.getConversation(this.contact);
+    });
+  }
+
+  terminateUpdating(subscribe) {
+    setTimeout(() => subscribe.unsubscribe(), 0);
   }
 }
 

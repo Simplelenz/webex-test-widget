@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 import * as base from 'base64-url';
+import {interval} from 'rxjs/observable/interval';
 
 @Component({
   selector: 'app-message-panel',
   templateUrl: './message-panel.component.html',
   styleUrls: ['./message-panel.component.css']
 })
-export class MessagePanelComponent implements OnInit {
+export class MessagePanelComponent implements OnInit, OnDestroy {
 
   @Input() conversation: any = [];
   @Input() members: any = [];
@@ -23,11 +24,18 @@ export class MessagePanelComponent implements OnInit {
   tab: any = TAB;
   IconConstant: any = IconConstant;
   newMessage: string;
+  tempInterval: any;
 
   constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
+    this.conversation = [];
+    this.startUpdating();
+  }
+
+  ngOnDestroy() {
+    this.terminateUpdating(this.tempInterval);
   }
 
   clickVideoCall() {
@@ -109,5 +117,15 @@ export class MessagePanelComponent implements OnInit {
     }), error => {
       console.log(error);
     });
+  }
+
+  startUpdating() {
+    this.tempInterval = interval(2000).subscribe(() => {
+      this.getConversation();
+    });
+  }
+
+  terminateUpdating(subscribe) {
+    setTimeout(() => subscribe.unsubscribe(), 0);
   }
 }

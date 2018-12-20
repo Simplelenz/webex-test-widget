@@ -143,7 +143,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 }
 
 body {
-  /*background-image: url(../img/background-img.jpg);*/
+  background-image: url(../img/background-img.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
