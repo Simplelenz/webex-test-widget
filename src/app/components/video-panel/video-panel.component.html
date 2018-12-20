@@ -17,7 +17,11 @@
           <div class="call-view">
             <div class="video">
               <div class="screen">
-                <img src="./assets/images/video-screen.png" alt="video">
+                <!-- <img src="./assets/images/video-screen.png" alt="video"> -->
+                <video style="width:50%" id="self-view" muted autoplay #videoElem></video>
+                <div style="width:50%">
+                  <video id="remote-view-video" autoplay #viewVideoElem></video>
+                </div>
               </div>
               <div class="options">
                 <button class="volume">
