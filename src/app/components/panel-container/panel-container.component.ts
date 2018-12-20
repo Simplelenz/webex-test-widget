@@ -323,9 +323,9 @@ export class PanelContainerComponent implements OnInit {
     });
 
     // Of course, we'd also like to be able to end the call:
-    document.getElementById('hangup').addEventListener('click', () => {
-      call.hangup();
-    });
+    // document.getElementById('hangup').addEventListener('click', () => {
+    //   call.hangup();
+    // });
   }
 
   connect() {

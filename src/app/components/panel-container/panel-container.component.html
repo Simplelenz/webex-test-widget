@@ -33,7 +33,7 @@
           <app-video-panel *ngIf="panel == tab.VIDEO"
                            (closeVideoCallFunction)="closeVideoCallFunctionEmit()" [videoElem]="videoElem" [viewVideoElem]="viewVideoElem"></app-video-panel>
           <app-audio-panel *ngIf="panel == tab.AUDIO"
-                           (closeAudioCallFunction)="closeAudioCallFunctionEmit()"></app-audio-panel>
+                           (closeAudioCallFunction)="closeAudioCallFunctionEmit()" [videoElem]="videoElem" [viewAudioElem]="viewAudioElem"></app-audio-panel>
           <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"
                              [email]="email"
                              [contact]="contact"
