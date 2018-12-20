@@ -63,6 +63,7 @@ export class MessagePanelComponent implements OnInit {
       }), error => {
         console.log(error);
       });
+      this.newMessage = undefined;
     }
   }
 
@@ -74,7 +75,6 @@ export class MessagePanelComponent implements OnInit {
     this.httpService.request(options).subscribe((response => {
       const temp: any = JSON.parse(response['_body']);
       this.conversation = temp.items;
-      this.newMessage = undefined;
     }), error => {
       console.log(error);
     });

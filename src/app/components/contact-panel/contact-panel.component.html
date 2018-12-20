@@ -5,7 +5,7 @@
         <app-search-bar (searchText)="term = $event"></app-search-bar>
       </div>
       <div class="results">
-        <button *ngIf="showDoneButton" (click)="clickDone()" class="create_new">Done&nbsp;<app-icon
+        <button *ngIf="showDoneButton && selectedContactList.length > 0" (click)="clickDone()" class="create_new">Done&nbsp;<app-icon
           [faIconString]="IconConstant.CONTACT_CHECK"></app-icon>
         </button>
         <div class="results_box">
