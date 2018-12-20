@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Constant, CONF } from '../configurations/StringConstants';
 import { URL } from '../configurations/UrlConstants';
@@ -18,6 +18,7 @@ export class AuthComponent implements OnInit {
   private redirectUri: string;
   private clientId: string;
   private clientSecret: string;
+  @Output() authSuccessEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private utilService: UtilService, private loginService: LoginService, private configService: ConfigService) {
   }
@@ -31,7 +32,7 @@ export class AuthComponent implements OnInit {
 
   handleExternalAuth() {
     this.isAuthenticated = localStorage.getItem(Constant.IS_AUTHENTICATED) === 'true' ? true : false;
-
+    this.authSuccessEmitter.emit(this.isAuthenticated);
     if (localStorage.getItem(Constant.IS_WEBEX_LOGIN_DIRECTED)) {
       this.isWebexLoginDirected = localStorage.getItem(Constant.IS_WEBEX_LOGIN_DIRECTED) === 'true' ? true : false;
     } else {
@@ -70,6 +71,7 @@ export class AuthComponent implements OnInit {
           this.isAuthenticated = JSON.parse(response['_body']).access_token ? true : false;
           localStorage.setItem(Constant.IS_AUTHENTICATED, this.isAuthenticated.toString());
           localStorage.setItem(Constant.WEBEX_TOKENS, response['_body']);
+          this.authSuccessEmitter.emit(true);
         } catch (error) {
           console.error(error);
         }

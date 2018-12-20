@@ -1,4 +1,6 @@
-<app-panel-container *ngIf="showPanelContainer" [email]="email"
+<app-auth (authSuccessEmitter)="isAuthSuccess($event)"></app-auth>
+
+<app-panel-container *ngIf="showPanelContainer && isSuccess" [email]="email"
                      (close)="showHidePanelContainer($event)"></app-panel-container>
-<app-frontier-opener *ngIf="!showPanelContainer"
+<app-frontier-opener *ngIf="!showPanelContainer && isSuccess"
                      (showPanelContainer)="showHidePanelContainer($event)"></app-frontier-opener>

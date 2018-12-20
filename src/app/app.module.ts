@@ -73,7 +73,7 @@ const appRoutes: Routes = [];
     MockService,
     DataService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [FrontierWidgetComponent]
 })
 export class AppModule {
 }

@@ -4,7 +4,7 @@ import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
-import * as base from 'base64-url';
+// import * as base from 'base64-url';
 import {interval} from 'rxjs/observable/interval';
 
 @Component({
