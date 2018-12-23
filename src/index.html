@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>TestWidget</title>
-  <base href="/">
+  <head>
+    <meta charset="utf-8">
+    <title>TestWidget</title>
+    <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    var xhrObj = new XMLHttpRequest();
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      var xhrObj = new XMLHttpRequest();
     var url = '/config/config.js?' + Date.now();
     xhrObj.open('GET', url, false);
     xhrObj.send('');
@@ -17,14 +17,14 @@
     se.text = xhrObj.responseText;
     document.getElementsByTagName('head')[0].appendChild(se);
   </script>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="/assets/css/css/home-styles.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
-        integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
-</head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/css/home-styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
+      crossorigin="anonymous">
+  </head>
 
-<body>
-<app-frontier-widget></app-frontier-widget>
-</body>
+  <body>
+    <app-frontier-widget></app-frontier-widget>
+  </body>
 
 </html>

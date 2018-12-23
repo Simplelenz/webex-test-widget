@@ -6,6 +6,7 @@ import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 // import * as base from 'base64-url';
 import {interval} from 'rxjs/observable/interval';
+import { Constant } from '../../configurations/StringConstants';
 
 @Component({
   selector: 'app-message-panel',
@@ -91,26 +92,19 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   }
 
   chooseImageFile(event) {
-    if (event.target.files.item(0).type.split('/')[0]) {
-      console.log(event.target.files);
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        // this.sendFile(e.target.result);
-        // console.log(e.target.result);
-        // console.log(base.escape(e.target.result));
-      };
-      reader.readAsDataURL(file);
-    } else {
-      console.error('unsupported file type :( ');
-    }
+    const file = event.target.files[0];
+    this.sendFile(file);
   }
 
-  sendFile(path) {
+  sendFile(file: File) {
     const options = new RequestOptions();
     options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
     options.method = RequestMethod.Post;
-    options.body = {'files': path, 'roomId': this.contact.id, text: 'lakshitha'};
+    const body: FormData = new FormData();
+    body.append(Constant.ROOM_ID, this.contact.id);
+    body.append(Constant.FILES, file);
+    options.body = body;
+    // options.body = {'files': path, 'roomId': this.contact.id, text: 'lakshitha'};
 
     this.httpService.request(options).subscribe((response => {
       this.getConversation();

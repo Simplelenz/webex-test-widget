@@ -11,6 +11,8 @@ export namespace Constant {
   export const BEARER = 'Bearer';
   export const IS_AUTHENTICATED = 'isAuthenticated';
   export const AUTHORIZATION_HEADER = 'Authorization';
+  export const ROOM_ID = 'roomId';
+  export const FILES = 'files';
 }
 
 export namespace CONF {

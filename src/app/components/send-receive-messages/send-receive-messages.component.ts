@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Constant} from '../../configurations/StringConstants';
-import base64url from 'base64url';
 
 @Component({
   selector: 'app-send-receive-messages',
