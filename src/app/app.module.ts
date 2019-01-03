@@ -30,6 +30,7 @@ import { ReversePipePipe } from './pipes/reverse-pipe.pipe';
 import { DeleteConversationPopupComponent } from './components/delete-conversation-popup/delete-conversation-popup.component';
 import { DataService } from './services/data.service';
 import { LoaderComponent } from './components/loader/loader.component';
+import { CiscosparkDirective } from './ciscospark.directive';
 
 
 const appRoutes: Routes = [];
@@ -55,6 +56,7 @@ const appRoutes: Routes = [];
     ReversePipePipe,
     DeleteConversationPopupComponent,
     LoaderComponent,
+    CiscosparkDirective
   ],
   imports: [
     BrowserModule,
