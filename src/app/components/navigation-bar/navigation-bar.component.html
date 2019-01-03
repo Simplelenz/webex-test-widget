@@ -7,7 +7,7 @@
     </li>
     <li *ngIf="visibleTabs.CONVERSATION" (click)="activatedTab = tab.CONVERSATION; clickTab(tab.CONVERSATION);"
         [ngClass]="(activatedTab == tab.CONVERSATION)?'tab-active':''"><a
-      class="tabs-nav_label">conversion</a>
+      class="tabs-nav_label">conversation</a>
     </li>
     <li *ngIf="visibleTabs.CONTACTS" (click)="activatedTab = tab.CONTACTS; clickTab(tab.CONTACTS);"
         [ngClass]="(activatedTab == tab.CONTACTS)?'tab-active':''"><a
