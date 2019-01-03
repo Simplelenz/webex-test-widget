@@ -13,6 +13,7 @@ export namespace Constant {
   export const AUTHORIZATION_HEADER = 'Authorization';
   export const ROOM_ID = 'roomId';
   export const FILES = 'files';
+  export const REFRESH_ACCESS_TOKEN_ERROR = 'The request requires a valid access token set in the Authorization request header.';
 }
 
 export namespace CONF {

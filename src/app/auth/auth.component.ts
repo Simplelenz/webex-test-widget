@@ -55,7 +55,7 @@ export class AuthComponent implements OnInit {
 
   getAuthCode() {
     const queryParams = this.utilService.getQueryString();
-    return queryParams && queryParams.code ?  queryParams.code : null;
+    return queryParams && queryParams.code ? queryParams.code : null;
   }
 
   getAccessToken() {
@@ -78,6 +78,22 @@ export class AuthComponent implements OnInit {
       },
       error => {
         console.error(error);
+        try {
+          if (JSON.parse(error['_body']).message.includes(Constant.REFRESH_ACCESS_TOKEN_ERROR)) {
+            const refreshToken = JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).refresh_token;
+            subscription = this.loginService.refreshAccessToken(grantType, this.clientId, this.clientSecret, refreshToken).subscribe(
+              response => {
+                subscription.unsubscribe();
+                this.isAuthenticated = JSON.parse(response['_body']).access_token ? true : false;
+                localStorage.setItem(Constant.IS_AUTHENTICATED, this.isAuthenticated.toString());
+                localStorage.setItem(Constant.WEBEX_TOKENS, response['_body']);
+                this.authSuccessEmitter.emit(true);
+              }
+            );
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
     );
   }
