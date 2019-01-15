@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Constant} from '../../configurations/StringConstants';
+import {RequestMethod, RequestOptions} from '@angular/http';
+import {HttpService} from '../../services/http.service';
+import {HttpClient} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-send-receive-messages',
@@ -13,13 +17,17 @@ export class SendReceiveMessagesComponent implements OnInit {
   @Input() name = '';
   @Input() time = '';
   @Input() object: any;
+  @Input() fileName: any;
 
   @Output() clickAttachmentButton: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private httpService: HttpService, private http: HttpClient) {
   }
 
   ngOnInit() {
+    if (this.message === '*File*' && this.fileName) {
+      this.getFileName(this.fileName);
+    }
   }
 
   clickAttachment() {
@@ -57,5 +65,29 @@ export class SendReceiveMessagesComponent implements OnInit {
     b.name = fileName;
 
     return <File>theBlob;
+  }
+
+  getFileName(url: string) {
+    const options = new RequestOptions();
+    options.url = url;
+    options.method = RequestMethod.Head;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp = response.headers;
+      console.log(temp);
+    }), error => {
+      console.log(error);
+    });
+
+    // const accessToken = JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).access_token;
+    //
+    // const Http = new XMLHttpRequest();
+    // Http.setRequestHeader('Access-Control-Allow-Origin', '*');
+    // Http.open('HEAD', url);
+    // Http.setRequestHeader(Constant.AUTHORIZATION_HEADER, Constant.BEARER + ' ' + accessToken);
+    // Http.send();
+    // Http.onreadystatechange = (e) => {
+    //   console.log(Http.getAllResponseHeaders());
+    // };
   }
 }
