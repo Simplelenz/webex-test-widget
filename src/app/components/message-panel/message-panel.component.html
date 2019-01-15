@@ -19,11 +19,11 @@
         <div class="results_box">
           <div #list class="chat-view" [scrollTop]="list.scrollHeight">
             <app-loader *ngIf="conversation.length == 0 && !newConversation"></app-loader>
-            <ng-container *ngFor="let message of conversation | reversePipe; let i = index">
+            <ng-container *ngFor="let message of conversation; let i = index">
               <app-send-receive-messages [me]="(message?.personEmail == email)? true : false"
                                          [object]="message"
                                          [message]="(message?.text)?(message?.text):'*File*'"
-                                         [fileName]="!(message?.text)?(message?.files[0]):''"
+                                         [fileName]="(attachments[i]?.index == (conversation.length - (i + 1)))? attachments[i]?.fileName : ''"
                                          [name]="getDisplayName(message.personEmail)"
                                          [time]="formatLastActivity(message?.created)"></app-send-receive-messages>
             </ng-container>

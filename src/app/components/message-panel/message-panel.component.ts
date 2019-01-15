@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, OnDestroy} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
@@ -6,7 +6,8 @@ import {RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 // import * as base from 'base64-url';
 import {interval} from 'rxjs/observable/interval';
-import { Constant } from '../../configurations/StringConstants';
+import {Constant} from '../../configurations/StringConstants';
+import {Attachment} from './Attachment';
 
 @Component({
   selector: 'app-message-panel',
@@ -26,12 +27,16 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   IconConstant: any = IconConstant;
   newMessage: string;
   tempInterval: any;
+  attachments: Array<Attachment> = [];
+  tempAttachments: Array<Attachment> = [];
 
   constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
     this.conversation = [];
+    this.attachments = [];
+    this.tempAttachments = [];
     this.startUpdating();
   }
 
@@ -86,6 +91,7 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
     this.httpService.request(options).subscribe((response => {
       const temp: any = JSON.parse(response['_body']);
       this.conversation = temp.items;
+      this.conversation = this.conversation.reverse();
     }), error => {
       console.log(error);
     });
@@ -116,10 +122,48 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   startUpdating() {
     this.tempInterval = interval(2000).subscribe(() => {
       this.getConversation();
+      this.setAttachmentsArray();
     });
   }
 
   terminateUpdating(subscribe) {
     setTimeout(() => subscribe.unsubscribe(), 0);
+  }
+
+  setAttachmentsArray() {
+    const temp = [];
+    this.conversation.forEach((message, i) => {
+      if (message.text === undefined) {
+        temp.push(new Attachment(this.conversation.length - (i + 1), message.files[0], ''));
+      } else {
+        temp.push(new Attachment(this.conversation.length - (i + 1), Math.random(), '*'));
+      }
+    });
+    if (temp.length !== this.tempAttachments.length) {
+      this.tempAttachments = temp;
+    }
+    if (this.tempAttachments.length !== this.attachments.length) {
+      this.attachments = [];
+      const difference = this.tempAttachments.filter(e => !this.attachments.find(a => e.url === a.url));
+      difference.forEach((item) => {
+        if (item.fileName !== '*') {
+          this.getFileName(item.url).subscribe((response => {
+            this.attachments.push(new Attachment(item.index, item.url, response.headers.get('content-type')));
+            this.attachments = this.attachments.sort((a, b) => b.index - a.index);
+          }), error => {
+            console.log(error);
+          });
+        } else {
+          this.attachments.push(new Attachment(item.index, item.url, ''));
+        }
+      });
+    }
+  }
+
+  getFileName(url: string): any {
+    const options = new RequestOptions();
+    options.url = url;
+    options.method = RequestMethod.Head;
+    return this.httpService.request(options);
   }
 }
