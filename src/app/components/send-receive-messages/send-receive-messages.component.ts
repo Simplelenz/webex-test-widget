@@ -46,7 +46,11 @@ export class SendReceiveMessagesComponent implements OnInit {
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
     a.href = objectUrl;
-    a.download = fileName;
+    if (this.fileName) {
+      a.download = this.fileName;
+    } else {
+      a.download = fileName;
+    }
     document.body.appendChild(a);
     a.click();
 

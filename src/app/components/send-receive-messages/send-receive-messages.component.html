@@ -2,9 +2,11 @@
   <div class="message">
     <p class="info">{{me? 'me' : name}}<span>{{time | date:'medium' }}</span></p>
     <p *ngIf="message != '*File*'" class="words">{{message}}</p>
-    <p *ngIf="message == '*File*'" class="words"><img (click)="clickAttachment()" style="cursor: pointer"
-                                                      src="../../../assets/css/img/icons/icon-attachment-chat_2.png"
-                                                      alt="attachment icon"> <span>{{fileName}}</span>
+    <p *ngIf="message == '*File*'" class="words" (click)="clickAttachment()"><img
+      style="cursor: pointer; height: 15px; position: center;"
+      src="../../../assets/css/img/icons/icon-attachment-chat_2.png"
+      alt="attachment icon"> <span id="fileName">
+    <p>{{fileName}}</p></span>
     </p>
   </div>
 </div>
