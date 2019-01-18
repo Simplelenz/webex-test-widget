@@ -152,15 +152,21 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   }
 
   terminateUpdating1(subscribe) {
-    setTimeout(() => subscribe.unsubscribe(), 0);
+    if (subscribe) {
+      setTimeout(() => subscribe.unsubscribe(), 0);
+    }
   }
 
   terminateUpdating2(subscribe) {
-    setTimeout(() => subscribe.unsubscribe(), 0);
+    if (subscribe) {
+      setTimeout(() => subscribe.unsubscribe(), 0);
+    }
   }
 
   terminateUpdating3(subscribe) {
-    setTimeout(() => subscribe.unsubscribe(), 0);
+    if (subscribe) {
+      setTimeout(() => subscribe.unsubscribe(), 0);
+    }
   }
 
   setAttachmentsArray() {
