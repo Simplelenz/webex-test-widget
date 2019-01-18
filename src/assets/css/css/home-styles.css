@@ -1078,6 +1078,7 @@ body {
   cursor: pointer;
   position: relative;
   width: 40px;
+  min-width: 40px;
 }
 
 .content .content-wrap .results .results_box .chat-view_row .message .words #fileName p {
