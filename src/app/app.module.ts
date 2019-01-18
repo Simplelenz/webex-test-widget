@@ -31,7 +31,7 @@ import { DeleteConversationPopupComponent } from './components/delete-conversati
 import { DataService } from './services/data.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { CiscosparkDirective } from './ciscospark.directive';
-
+import {PressEnterDirective} from './components/message-panel/KeyPress';
 
 const appRoutes: Routes = [];
 
@@ -56,7 +56,8 @@ const appRoutes: Routes = [];
     ReversePipePipe,
     DeleteConversationPopupComponent,
     LoaderComponent,
-    CiscosparkDirective
+    CiscosparkDirective,
+    PressEnterDirective
   ],
   imports: [
     BrowserModule,

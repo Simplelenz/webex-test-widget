@@ -45,7 +45,7 @@
                 <input id="file-input" type="file" (change)="chooseImageFile($event)">
               </div>
               <div *ngIf="newFile" class="plane">
-                <label (click)="sendFile(newFile)" for="file-input">
+                <label pressEnter (pressEnterEmit)="sendFile(newFile)" (click)="sendFile(newFile)" for="file-input">
                   <img src="./assets/images/icons/icon-paper-plane.png" alt="attachment icon">
                 </label>
               </div>
