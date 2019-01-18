@@ -44,7 +44,13 @@
                 </label>
                 <input id="file-input" type="file" (change)="chooseImageFile($event)">
               </div>
+              <div *ngIf="newFile" class="plane">
+                <label (click)="sendFile(newFile)" for="file-input">
+                  <img src="./assets/images/icons/icon-paper-plane.png" alt="attachment icon">
+                </label>
+              </div>
               <input class="msg-field" [(ngModel)]="newMessage" (keydown)="sendNewMessage($event)"
+                     [attr.disabled]="newFile"
                      placeholder="Add Your Message Here"
                      style="overflow: hidden;">
             </div>

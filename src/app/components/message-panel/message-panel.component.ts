@@ -2,12 +2,13 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {HttpService} from '../../services/http.service';
-import {RequestMethod, RequestOptions} from '@angular/http';
+import {Http, RequestMethod, RequestOptions} from '@angular/http';
 import {URL} from '../../configurations/UrlConstants';
 // import * as base from 'base64-url';
 import {interval} from 'rxjs/observable/interval';
-import {Constant} from '../../configurations/StringConstants';
+import {CONF, Constant} from '../../configurations/StringConstants';
 import {Attachment} from './Attachment';
+import {ConfigService} from '../../services/config.service';
 
 @Component({
   selector: 'app-message-panel',
@@ -26,11 +27,15 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   tab: any = TAB;
   IconConstant: any = IconConstant;
   newMessage: string;
-  tempInterval: any;
+  newFile: any;
+  tempInterval1: any;
+  tempInterval2: any;
+  tempInterval3: any;
   attachments: Array<Attachment> = [];
   tempAttachments: Array<Attachment> = [];
+  initStageFileNames = true;
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private http: Http, private configService: ConfigService) {
   }
 
   ngOnInit() {
@@ -41,7 +46,9 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.terminateUpdating(this.tempInterval);
+    this.terminateUpdating1(this.tempInterval1);
+    this.terminateUpdating2(this.tempInterval2);
+    this.terminateUpdating3(this.tempInterval3);
   }
 
   clickVideoCall() {
@@ -69,17 +76,23 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   sendNewMessage(event) {
     if (event.key === 'Enter' && this.newMessage) {
 
-      const options = new RequestOptions();
-      options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
-      options.method = RequestMethod.Post;
-      options.body = {'roomId': this.contact.id, text: this.newMessage};
+      if (!this.newFile) {
+        const options = new RequestOptions();
+        options.url = URL.WEBEX_API_BASE + URL.SEND_MESSAGE;
+        options.method = RequestMethod.Post;
+        options.body = {'roomId': this.contact.id, text: this.newMessage};
 
-      this.httpService.request(options).subscribe((response => {
-        this.getConversation();
-      }), error => {
-        console.log(error);
-      });
+        this.httpService.request(options).subscribe((response => {
+          this.getConversation();
+        }), error => {
+          console.log(error);
+        });
+      } else {
+        this.sendFile(this.newFile);
+      }
+
       this.newMessage = undefined;
+      this.newFile = undefined;
     }
   }
 
@@ -98,8 +111,9 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   }
 
   chooseImageFile(event) {
-    const file = event.target.files[0];
-    this.sendFile(file);
+    this.newFile = event.target.files[0];
+    this.newMessage = this.newFile.name;
+    // this.sendFile(file);
   }
 
   sendFile(file: File) {
@@ -117,21 +131,42 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
     }), error => {
       console.log(error);
     });
+    this.newFile = undefined;
+    this.newMessage = undefined;
   }
 
   startUpdating() {
-    this.tempInterval = interval(2000).subscribe(() => {
+    this.tempInterval1 = interval(2000).subscribe(() => {
       this.getConversation();
-      this.setAttachmentsArray();
     });
+    if (this.initStageFileNames) {
+      this.tempInterval2 = interval(3000).subscribe(() => {
+        this.initStageFileNames = false;
+        this.setAttachmentsArray();
+      });
+    } else {
+      this.tempInterval3 = interval(1000).subscribe(() => {
+        this.setAttachmentsArray();
+      });
+    }
   }
 
-  terminateUpdating(subscribe) {
+  terminateUpdating1(subscribe) {
+    setTimeout(() => subscribe.unsubscribe(), 0);
+  }
+
+  terminateUpdating2(subscribe) {
+    setTimeout(() => subscribe.unsubscribe(), 0);
+  }
+
+  terminateUpdating3(subscribe) {
     setTimeout(() => subscribe.unsubscribe(), 0);
   }
 
   setAttachmentsArray() {
     const temp = [];
+    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+
     this.conversation.forEach((message, i) => {
       if (message.text === undefined) {
         temp.push(new Attachment(this.conversation.length - (i + 1), message.files[0], ''));
@@ -148,8 +183,12 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
       difference.forEach((item) => {
         if (item.fileName !== '*') {
           this.getFileName(item.url).subscribe((response => {
-            this.attachments.push(new Attachment(item.index, item.url, response.headers.get('content-type')));
-            this.attachments = this.attachments.sort((a, b) => b.index - a.index);
+            const matches = filenameRegex.exec(JSON.parse(response._body)['content-disposition']);
+            if (matches != null && matches[1]) {
+              const fileName = (matches[1].replace(/['"]/g, ''));
+              this.attachments.push(new Attachment(item.index, item.url, fileName));
+              this.attachments = this.attachments.sort((a, b) => b.index - a.index);
+            }
           }), error => {
             console.log(error);
           });
@@ -161,9 +200,6 @@ export class MessagePanelComponent implements OnInit, OnDestroy {
   }
 
   getFileName(url: string): any {
-    const options = new RequestOptions();
-    options.url = url;
-    options.method = RequestMethod.Head;
-    return this.httpService.request(options);
+    return this.http.get(this.configService.get(CONF.FRONTIER, CONF.NODE_SERVER_BASE_URL) + 'file-name?token=' + JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).access_token + '&suffix=' + url.split('/contents/')[1]);
   }
 }

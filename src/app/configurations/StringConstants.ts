@@ -21,4 +21,5 @@ export namespace CONF {
   export const REDIRECT_URI = 'REDIRECT_URI';
   export const CLIENT_ID = 'CLIENT_ID';
   export const CLIENT_SECRET = 'CLIENT_SECRET';
+  export const NODE_SERVER_BASE_URL = 'NODE_SERVER_BASE_URL';
 }
