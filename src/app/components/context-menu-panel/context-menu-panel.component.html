@@ -1,0 +1,12 @@
+<div class="context-menu">
+  <div class="contextmenu_wrapper">
+    <ul class="avatar-list">
+      <ng-container *ngFor="let contact of contactList; let i = index">
+        <li (click)="clickAvatar(contact)"><a><img
+          [src]="'assets/images/icons/avatars/avatar'+ getIcon(i) + '.png'"
+          alt="avatar"></a>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

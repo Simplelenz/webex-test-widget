@@ -1,0 +1,16 @@
+<div class="popup contextmenu" (click)="clickSpace()" [ngClass]="showPopUp? 'show': 'hide'">
+  <div class="popup_box">
+    <div class="popup_box--content">
+      <div class="header">
+        <p>{{contact?.title}}</p>
+      </div>
+      <div class="body">
+        <div class="btn-grp">
+          <button (click)="clickChat()" class="chat">Chat</button>
+          <button (click)="clickCall()" class="call">Call</button>
+          <button (click)="clickVideoCall()" class="video">Video Call</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

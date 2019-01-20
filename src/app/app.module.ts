@@ -32,6 +32,8 @@ import { DataService } from './services/data.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { CiscosparkDirective } from './ciscospark.directive';
 import {PressEnterDirective} from './components/message-panel/KeyPress';
+import { ContextMenuPopupComponent } from './components/context-menu-popup/context-menu-popup.component';
+import { ContextMenuPanelComponent } from './components/context-menu-panel/context-menu-panel.component';
 
 const appRoutes: Routes = [];
 
@@ -57,7 +59,9 @@ const appRoutes: Routes = [];
     DeleteConversationPopupComponent,
     LoaderComponent,
     CiscosparkDirective,
-    PressEnterDirective
+    PressEnterDirective,
+    ContextMenuPopupComponent,
+    ContextMenuPanelComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,8 @@ export class FrontierWidgetComponent implements OnInit {
   @Input() email: string;
   showPanelContainer = false;
   isSuccess: boolean;
+  showContextPopUp = false;
+  avatarContact: any;
 
   constructor(private elm: ElementRef) {
     this.email = elm.nativeElement.getAttribute('email');
@@ -25,5 +27,13 @@ export class FrontierWidgetComponent implements OnInit {
   isAuthSuccess(event) {
     this.isSuccess = event;
     return this.isSuccess;
+  }
+
+  contextPopUp(event) {
+    this.showContextPopUp = event;
+  }
+
+  setAvatarContact(contact) {
+    this.avatarContact = contact;
   }
 }
