@@ -1,4 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {URL} from "../../configurations/UrlConstants";
+import {RequestMethod, RequestOptions} from "@angular/http";
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'app-context-menu-popup',
@@ -10,15 +13,17 @@ export class ContextMenuPopupComponent implements OnInit {
   @Input() showPopUp = false;
   @Input() contact: any;
   @Output() clickSpaceEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clickChatFunction: EventEmitter<any> = new EventEmitter<any>();
+  conversation: any = [];
 
-  constructor() {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
   }
 
   clickChat() {
-    console.log('click chat in pop up');
+    this.getConversation();
   }
 
   clickCall() {
@@ -31,5 +36,19 @@ export class ContextMenuPopupComponent implements OnInit {
 
   clickSpace() {
     this.clickSpaceEmit.emit(false);
+  }
+
+  getConversation() {
+    const options = new RequestOptions();
+    options.url = URL.WEBEX_API_BASE + (URL.MESSAGES).replace('{roomId}', this.contact.id);
+    options.method = RequestMethod.Get;
+
+    this.httpService.request(options).subscribe((response => {
+      const temp: any = JSON.parse(response['_body']);
+      this.conversation = temp.items;
+      this.clickChatFunction.emit(this.conversation);
+    }), error => {
+      console.log(error);
+    });
   }
 }

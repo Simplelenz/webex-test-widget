@@ -10,6 +10,7 @@ export class FrontierWidgetComponent implements OnInit {
   @Input() email: string;
   showPanelContainer = false;
   isSuccess: boolean;
+  showContextMenu = true;
   showContextPopUp = false;
   avatarContact: any;
 
@@ -35,5 +36,10 @@ export class FrontierWidgetComponent implements OnInit {
 
   setAvatarContact(contact) {
     this.avatarContact = contact;
+  }
+
+  emitConversation(conversation) {
+    this.showContextMenu = false;
+    console.log(conversation);
   }
 }

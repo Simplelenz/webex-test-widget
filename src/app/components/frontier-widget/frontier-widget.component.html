@@ -2,8 +2,10 @@
 
 <app-panel-container *ngIf="showPanelContainer && isSuccess" [email]="email"
                      (close)="showHidePanelContainer($event)" appCiscospark></app-panel-container>
-<app-frontier-opener *ngIf="!showPanelContainer && isSuccess"
+<app-frontier-opener *ngIf="!showPanelContainer && isSuccess && showContextMenu"
                      (showPanelContainer)="showHidePanelContainer($event)"></app-frontier-opener>
-<app-context-menu-panel (avatarContactEmit)="setAvatarContact($event)" (clickAvatarEmit)="contextPopUp($event)"></app-context-menu-panel>
-<app-context-menu-popup [showPopUp]="showContextPopUp" [contact]="avatarContact"
+<app-context-menu-panel *ngIf="showContextMenu && isSuccess" (avatarContactEmit)="setAvatarContact($event)"
+                        (clickAvatarEmit)="contextPopUp($event)"></app-context-menu-panel>
+<app-context-menu-popup *ngIf="isSuccess" [showPopUp]="showContextPopUp" [contact]="avatarContact"
+                        (clickChatFunction)="emitConversation($event)"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>
