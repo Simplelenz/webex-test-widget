@@ -1,11 +1,11 @@
 <app-auth (authSuccessEmitter)="isAuthSuccess($event)"></app-auth>
 
-<app-panel-container *ngIf="showPanelContainer && isSuccess" [email]="email"
+<app-panel-container *ngIf="showPanelContainer && isSuccess" [email]="email" [contextPanelData]="contextPanelData"
                      (close)="showHidePanelContainer($event)" appCiscospark></app-panel-container>
 <app-frontier-opener *ngIf="!showPanelContainer && isSuccess && showContextMenu"
                      (showPanelContainer)="showHidePanelContainer($event)"></app-frontier-opener>
-<app-context-menu-panel *ngIf="showContextMenu && isSuccess" (avatarContactEmit)="setAvatarContact($event)"
+<app-context-menu-panel *ngIf="!showPanelContainer && showContextMenu && isSuccess" (avatarContactEmit)="setAvatarContact($event)"
                         (clickAvatarEmit)="contextPopUp($event)"></app-context-menu-panel>
-<app-context-menu-popup *ngIf="isSuccess" [showPopUp]="showContextPopUp" [contact]="avatarContact"
+<app-context-menu-popup *ngIf="!showPanelContainer && isSuccess" [showPopUp]="showContextPopUp" [contact]="avatarContact"
                         (clickChatFunction)="emitConversation($event)"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>

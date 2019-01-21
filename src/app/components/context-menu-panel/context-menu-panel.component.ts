@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {URL} from "../../configurations/UrlConstants";
-import {RequestMethod, RequestOptions} from "@angular/http";
-import {HttpService} from "../../services/http.service";
+import {URL} from '../../configurations/UrlConstants';
+import {RequestMethod, RequestOptions} from '@angular/http';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-context-menu-panel',

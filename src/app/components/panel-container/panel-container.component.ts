@@ -17,6 +17,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy {
   @Input() userName = '';
   @Input() email: string;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  @Input() contextPanelData: any;
 
   @ViewChild('videoElem') videoElem: ElementRef;
   viewVideoElem: ElementRef;
@@ -57,6 +58,11 @@ export class PanelContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.contextPanelData) {
+      this.contact = this.contextPanelData.contact;
+      this.getConversation(this.contact);
+      this.getAllMembers(this.contact);
+    }
     this.getPeopleDetails(this.email);
   }
 

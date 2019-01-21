@@ -13,6 +13,7 @@ export class FrontierWidgetComponent implements OnInit {
   showContextMenu = true;
   showContextPopUp = false;
   avatarContact: any;
+  contextPanelData: any;
 
   constructor(private elm: ElementRef) {
     this.email = elm.nativeElement.getAttribute('email');
@@ -22,7 +23,9 @@ export class FrontierWidgetComponent implements OnInit {
   }
 
   showHidePanelContainer(event) {
+    this.contextPanelData = undefined;
     this.showPanelContainer = event;
+    this.showContextMenu = !event;
   }
 
   isAuthSuccess(event) {
@@ -40,6 +43,7 @@ export class FrontierWidgetComponent implements OnInit {
 
   emitConversation(conversation) {
     this.showContextMenu = false;
-    console.log(conversation);
+    this.showPanelContainer = true;
+    this.contextPanelData = {'contact': this.avatarContact, 'conversation': conversation};
   }
 }
