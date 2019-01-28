@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
       var xhrObj = new XMLHttpRequest();
-    var url = '/config/config.js?' + Date.now();
-    xhrObj.open('GET', url, false);
+    var configUrl = '/config/config.js?' + Date.now();
+    xhrObj.open('GET', configUrl, false);
     xhrObj.send('');
     var se = document.createElement('script');
     se.type = "text/javascript";

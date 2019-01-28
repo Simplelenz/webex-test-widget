@@ -33,7 +33,7 @@ export class CiscosparkDirective implements OnInit {
               // this is how things are going to work in 2.0 and if you plan on
               // doing any group calls, you'll need this turned on for your entire
               // app anyway.
-              enableExperimentalGroupCallingSupport: false
+              enableExperimentalGroupCallingSupport: true
             }
           },
           credentials: {
