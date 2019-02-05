@@ -31,8 +31,7 @@
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"
                              (selectedContacts)="selectedContacts = $event"></app-contact-panel>
           <app-video-panel *ngIf="panel == tab.VIDEO"
-                           (closeVideoCallFunction)="closeVideoCallFunctionEmit()" [videoElem]="videoElem"
-                           [viewVideoElem]="viewVideoElem"></app-video-panel>
+                           (closeVideoCallFunction)="closeVideoCallFunctionEmit()" [contact]="contact"></app-video-panel>
           <app-audio-panel *ngIf="panel == tab.AUDIO"
                            (closeAudioCallFunction)="closeAudioCallFunctionEmit()" [contact]="contact"></app-audio-panel>
           <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"

@@ -1,4 +1,5 @@
 import {Component, OnInit, ElementRef, Input} from '@angular/core';
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-frontier-widget',
@@ -14,12 +15,15 @@ export class FrontierWidgetComponent implements OnInit {
   showContextPopUp = false;
   avatarContact: any;
   contextPanelData: any;
+  spark: any;
 
-  constructor(private elm: ElementRef) {
+  constructor(private elm: ElementRef, private dataService: DataService) {
     this.email = elm.nativeElement.getAttribute('email');
+    this.spark = this.dataService.getSpark();
   }
 
   ngOnInit() {
+    console.log('frontier init');
   }
 
   showHidePanelContainer(event) {

@@ -1,4 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import {
+  Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, OnDestroy,
+  AfterViewInit
+} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
 import {RequestMethod, RequestOptions} from '@angular/http';
@@ -12,7 +15,7 @@ import {interval} from 'rxjs/observable/interval';
   templateUrl: './panel-container.component.html',
   styleUrls: ['./panel-container.component.css']
 })
-export class PanelContainerComponent implements OnInit, OnDestroy {
+export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() userName = '';
   @Input() email: string;
@@ -64,6 +67,10 @@ export class PanelContainerComponent implements OnInit, OnDestroy {
       this.getAllMembers(this.contact);
     }
     this.getPeopleDetails(this.email);
+  }
+
+  ngAfterViewInit() {
+    this.handleIncomingCalls();
   }
 
   clickClose() {
@@ -286,28 +293,38 @@ export class PanelContainerComponent implements OnInit, OnDestroy {
     setTimeout(() => subscribe.unsubscribe(), 0);
   }
 
-  incomingCallListen() {
-    try {
-      this.spark.phone.register();
-      this.spark.phone.on('call:incoming', function (call) {
-        // Set up listeners to update the UI if the callee chooses to answer the call.
-        call.on('connected', function () {
-          this.videoElem.nativeElement.srcObject = call.remoteMediaStream;
-        });
-        // call.on('localMediaStream:change', function () {
-        //   document.getElementById('outgoing-video').srcObject = call.localMediaStream;
-        //   // Mute the local video so you don't hear yourself speaking
-        //   document.getElementById('outgoing-video').muted = true;
-        // });
+  handleIncomingCalls() {
+    if (!this.spark.phone.registered) {
+      // we want to start listening for incoming calls *before* registering with
+      // the cloud so that we can join any calls that may already be in progress.
+      this.spark.phone.on('call:incoming', (call) => {
+        Promise.resolve()
+          .then(() => {
+            // Let's render the name of the person calling us. Note that calls
+            // from external sources (some SIP URIs, PSTN numbers, etc) may not
+            // have personIds, so we can't assume that field will exist.
+            if (call.from && call.from.personId) {
+              // In production, you'll want to cache this so you don't have to do
+              // a fetch on every incoming call.
+              return this.spark.people.get(call.from.personId);
+            }
 
-        // Let the caller know that you've indicated to the callee that there's an incoming call
-        call.acknowledge();
-
-        // Answer the call
-        call.answer();
+            return Promise.resolve();
+          })
+          .then((person) => {
+            const str = person ? `Anwser incoming call from ${person.displayName}` : 'Answer incoming call';
+            if (confirm(str)) {
+              call.answer();
+              // bindCallEvents(call);
+            } else {
+              call.decline();
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert(err);
+          });
       });
-    } catch (error) {
-      console.log(error);
     }
   }
 }

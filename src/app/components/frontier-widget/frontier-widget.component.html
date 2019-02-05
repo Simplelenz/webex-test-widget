@@ -9,3 +9,4 @@
 <app-context-menu-popup *ngIf="!showPanelContainer && isSuccess" [showPopUp]="showContextPopUp" [contact]="avatarContact"
                         (clickChatFunction)="emitConversation($event)"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>
+<ng-template *ngIf="isSuccess" appCiscospark></ng-template>
