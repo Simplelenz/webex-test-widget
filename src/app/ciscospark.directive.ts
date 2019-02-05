@@ -1,17 +1,20 @@
-import { Directive, OnInit } from '@angular/core';
-import { DataService } from './services/data.service';
-import { Constant } from './configurations/StringConstants';
+import {Directive, EventEmitter, OnInit, Output} from '@angular/core';
+import {DataService} from './services/data.service';
+import {Constant} from './configurations/StringConstants';
 
 @Directive({
   selector: '[appCiscospark]'
 })
 export class CiscosparkDirective implements OnInit {
+
+  @Output() sparkInitEmitter = new EventEmitter<boolean>();
+
   spark: any;
   accessToken: string;
 
   constructor(private dataService: DataService) {
     this.accessToken = this.dataService.getAccessToken();
-   }
+  }
 
   ngOnInit(): void {
     if (this.accessToken === undefined) {
@@ -41,6 +44,7 @@ export class CiscosparkDirective implements OnInit {
           }
         });
         this.dataService.setSpark(this.spark);
+        this.sparkInitEmitter.emit(true);
       }
     } catch (error) {
       console.error(error);
