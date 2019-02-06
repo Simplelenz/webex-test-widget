@@ -34,6 +34,7 @@ import { CiscosparkDirective } from './ciscospark.directive';
 import {PressEnterDirective} from './components/message-panel/KeyPress';
 import { ContextMenuPopupComponent } from './components/context-menu-popup/context-menu-popup.component';
 import { ContextMenuPanelComponent } from './components/context-menu-panel/context-menu-panel.component';
+import { IncomingCallWidgetComponent } from './components/incoming-call-widget/incoming-call-widget.component';
 
 const appRoutes: Routes = [];
 
@@ -61,7 +62,8 @@ const appRoutes: Routes = [];
     CiscosparkDirective,
     PressEnterDirective,
     ContextMenuPopupComponent,
-    ContextMenuPanelComponent
+    ContextMenuPanelComponent,
+    IncomingCallWidgetComponent
   ],
   imports: [
     BrowserModule,
