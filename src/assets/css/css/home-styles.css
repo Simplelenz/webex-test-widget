@@ -1544,8 +1544,17 @@ body::-webkit-scrollbar-thumb {
   margin: 5px 2%;
 }
 
+.context-menu .contextmenu_wrapper .avatar-list li a p {
+  text-align: center;
+  text-decoration: none;
+  margin-top: 0;
+  color: #111;
+  font-weight: 500;
+}
+
 .context-menu .contextmenu_wrapper .avatar-list li a {
   display: inline-block;
+  text-decoration: none;
 }
 
 .context-menu .contextmenu_wrapper .avatar-list li a img {

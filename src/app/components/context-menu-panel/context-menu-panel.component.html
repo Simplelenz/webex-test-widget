@@ -4,7 +4,9 @@
       <ng-container *ngFor="let contact of contactList; let i = index">
         <li (click)="clickAvatar(contact)"><a><img
           [src]="'assets/images/icons/avatars/avatar'+ getIcon(i) + '.png'"
-          alt="avatar"></a>
+          alt="avatar">
+          <p>{{contact.title}}</p>
+        </a>
         </li>
       </ng-container>
     </ul>
