@@ -45,6 +45,10 @@ export class CiscosparkDirective implements OnInit {
         });
         this.dataService.setSpark(this.spark);
         this.sparkInitEmitter.emit(true);
+
+        this.spark.phone.register().then(() => {
+          console.log('Incoming call on awake');
+        });
       }
     } catch (error) {
       console.error(error);

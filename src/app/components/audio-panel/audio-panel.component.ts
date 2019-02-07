@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
-import { DataService } from '../../services/data.service';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-audio-panel',
@@ -22,7 +22,11 @@ export class AudioPanelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.makeCall();
+    if (this.spark.phone.registered) {
+      this.bindCallEvents();
+    } else {
+      this.makeCall();
+    }
   }
 
   closeCall() {
@@ -50,7 +54,7 @@ export class AudioPanelComponent implements OnInit {
       audio: true,
       video: false
     };
-    this.call = this.spark.phone.dial(this.contact.id, { constraints });
+    this.call = this.spark.phone.dial(this.contact.id, {constraints});
 
     this.call.on('error', (err) => {
       console.error(err);

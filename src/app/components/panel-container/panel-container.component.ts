@@ -356,13 +356,6 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
                 this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
               }
             });
-
-            // if (confirm(str)) {
-            //   call.answer();
-            //   // bindCallEvents(call);
-            // } else {
-            //   call.decline();
-            // }
           })
           .catch((err) => {
             console.error(err);
