@@ -96,4 +96,16 @@ export class FrontierWidgetComponent implements OnInit {
     this.showPanelContainer = true;
     this.contextPanelData = {'contact': this.avatarContact, 'conversation': conversation};
   }
+
+  clickCallFunction() {
+    this.showContextMenu = false;
+    this.showPanelContainer = true;
+    this.contextPanelData = {'contact': this.avatarContact, 'conversation': 'audio'};
+  }
+
+  clickVideoCallFunction() {
+    this.showContextMenu = false;
+    this.showPanelContainer = true;
+    this.contextPanelData = {'contact': this.avatarContact, 'conversation': 'video'};
+  }
 }

@@ -4,11 +4,11 @@
       <div class="additional_info">
         <div class="additional_info--box">
           <p class="title">
-            <span *ngIf="contact.type == 'group'" class="icon"><img src="./assets/images/icons/icon-conversation.png"
+            <span *ngIf="contact?.type == 'group'" class="icon"><img src="./assets/images/icons/icon-conversation.png"
                                                                     alt="conversation icon"></span>
-            <span *ngIf="contact.type == 'direct'" class="icon"><img src="./assets/images/icons/icon-contact.png"
+            <span *ngIf="contact?.type == 'direct'" class="icon"><img src="./assets/images/icons/icon-contact.png"
                                                                      alt="contact icon"></span>
-            <span class="name">{{contact.title}}</span>
+            <span class="name">{{contact?.title}}</span>
           </p>
           <p class="partcipants">
             <span>{{members.length}}</span>&nbsp;Participants

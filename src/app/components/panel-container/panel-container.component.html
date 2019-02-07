@@ -20,7 +20,7 @@
                                          (deletePopUpFunction)="deleteConversationFunction($event)"></app-delete-conversation-popup>
           <app-conversation-name-popup *ngIf="showPopUp"
                                        (popUpFunction)="popUpFunctionEmit($event)"></app-conversation-name-popup>
-          <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab"
+          <app-navigation-bar [visibleTabs]="visibleTabs" [activatedTab]="activatedTab" [backDisable]="backDisable"
                               (tabChange)="changePanel($event); showDoneButton = false;"
                               (goBackPanel)="goBackPanelFunction(); showDoneButton = false; newConversation = false;"></app-navigation-bar>
           <app-conversation-panel *ngIf="panel == tab.CONVERSATION" [conversationList]="conversationList"
@@ -31,9 +31,11 @@
                              (clickDoneFunction)="clickDoneFunctionEmit($event)"
                              (selectedContacts)="selectedContacts = $event"></app-contact-panel>
           <app-video-panel *ngIf="panel == tab.VIDEO"
-                           (closeVideoCallFunction)="closeVideoCallFunctionEmit()" [contact]="contact"></app-video-panel>
+                           (closeVideoCallFunction)="closeVideoCallFunctionEmit()"
+                           [contact]="(contextPanelData)? contextPanelData.contact: contact"></app-video-panel>
           <app-audio-panel *ngIf="panel == tab.AUDIO"
-                           (closeAudioCallFunction)="closeAudioCallFunctionEmit()" [contact]="contact"></app-audio-panel>
+                           (closeAudioCallFunction)="closeAudioCallFunctionEmit()"
+                           [contact]="(contextPanelData)? contextPanelData.contact: contact"></app-audio-panel>
           <app-message-panel *ngIf="panel == tab.MESSAGE" [conversation]="conversation" [members]="members"
                              [email]="email"
                              [newConversation]="newConversation"

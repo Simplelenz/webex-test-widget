@@ -15,6 +15,7 @@ export class NavigationBarComponent implements OnInit {
 
   tab: any = TAB;
   @Input() activatedTab = this.tab.CONVERSATION;
+  @Input() backDisable = false;
   IconConstant: any = IconConstant;
 
   constructor() {

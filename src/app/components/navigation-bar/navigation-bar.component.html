@@ -1,7 +1,7 @@
 <div class="top-nav">
   <ul class="tabs-nav">
     <li>
-      <button (click)="activatedTab = tab.CONVERSATION; panelBack();" class="back-btn">
+      <button *ngIf="!backDisable" (click)="activatedTab = tab.CONVERSATION; panelBack();" class="back-btn">
         <app-icon [faIconString]="IconConstant.BACK_ARROW"></app-icon>
       </button>
     </li>
@@ -27,7 +27,7 @@
     </li>
   </ul>
   <!--<button class="logout-btn">-->
-    <!--<app-icon [faIconString]="IconConstant.LOGOUT"></app-icon>-->
-    <!--logout-->
+  <!--<app-icon [faIconString]="IconConstant.LOGOUT"></app-icon>-->
+  <!--logout-->
   <!--</button>-->
 </div>

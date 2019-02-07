@@ -7,6 +7,6 @@
 <app-context-menu-panel *ngIf="!showPanelContainer && showContextMenu && isSuccess" (avatarContactEmit)="setAvatarContact($event)"
                         (clickAvatarEmit)="contextPopUp($event)"></app-context-menu-panel>
 <app-context-menu-popup *ngIf="!showPanelContainer && isSuccess" [showPopUp]="showContextPopUp" [contact]="avatarContact"
-                        (clickChatFunction)="emitConversation($event)"
+                        (clickChatFunction)="emitConversation($event)" (clickCallFunction)="clickCallFunction()" (clickVideoCallFunction)="clickVideoCallFunction()"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>
 <ng-template *ngIf="isSuccess" appCiscospark (sparkInitEmitter)="isSparkInit($event)"></ng-template>

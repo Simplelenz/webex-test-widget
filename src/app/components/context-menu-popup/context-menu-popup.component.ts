@@ -14,6 +14,8 @@ export class ContextMenuPopupComponent implements OnInit {
   @Input() contact: any;
   @Output() clickSpaceEmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() clickChatFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clickCallFunction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clickVideoCallFunction: EventEmitter<any> = new EventEmitter<any>();
   conversation: any = [];
 
   constructor(private httpService: HttpService) {
@@ -24,14 +26,17 @@ export class ContextMenuPopupComponent implements OnInit {
 
   clickChat() {
     this.getConversation();
+    this.clickSpace();
   }
 
   clickCall() {
-    console.log('click call in pop up');
+    this.clickCallFunction.emit();
+    this.clickSpace();
   }
 
   clickVideoCall() {
-    console.log('click video call in pop up');
+    this.clickVideoCallFunction.emit();
+    this.clickSpace();
   }
 
   clickSpace() {

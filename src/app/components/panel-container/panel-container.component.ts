@@ -1,6 +1,5 @@
 import {
-  Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, OnDestroy,
-  AfterViewInit
+  Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, OnDestroy, OnChanges, AfterViewInit
 } from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {TAB} from '../navigation-bar/tabs.enum';
@@ -9,13 +8,14 @@ import {URL} from '../../configurations/UrlConstants';
 import {HttpService} from '../../services/http.service';
 import {DataService} from '../../services/data.service';
 import {interval} from 'rxjs/observable/interval';
+import {SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-panel-container',
   templateUrl: './panel-container.component.html',
   styleUrls: ['./panel-container.component.css']
 })
-export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
 
   @Input() userName = '';
   @Input() email: string;
@@ -48,6 +48,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
     video: false
   };
   tempInterval: any;
+  backDisable = false;
 
   constructor(private httpService: HttpService, private dataService: DataService) {
     if (this.contactList.length === 0) {
@@ -61,12 +62,29 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit() {
-    if (this.contextPanelData) {
+    if (this.contextPanelData && !(this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video')) {
       this.contact = this.contextPanelData.contact;
       this.getConversation(this.contact);
       this.getAllMembers(this.contact);
     }
     this.getPeopleDetails(this.email);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['contextPanelData']) {
+      if (this.contextPanelData) {
+        if (this.contextPanelData.conversation) {
+          if (this.contextPanelData.conversation === 'audio') {
+            this.clickCallFunctionEmit(this.tab.AUDIO);
+            this.backDisable = true;
+          }
+          if (this.contextPanelData.conversation === 'video') {
+            this.clickCallFunctionEmit(this.tab.VIDEO);
+            this.backDisable = true;
+          }
+        }
+      }
+    }
   }
 
   ngAfterViewInit() {
@@ -132,13 +150,21 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   closeVideoCallFunctionEmit() {
-    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
-    this.panel = this.activatedTab = this.tab.MESSAGE;
+    if (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video') {
+      this.clickClose();
+    } else {
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+      this.panel = this.activatedTab = this.tab.MESSAGE;
+    }
   }
 
   closeAudioCallFunctionEmit() {
-    this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
-    this.panel = this.activatedTab = this.tab.MESSAGE;
+    if (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video') {
+      this.clickClose();
+    } else {
+      this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
+      this.panel = this.activatedTab = this.tab.MESSAGE;
+    }
   }
 
   clickNewFunctionEmit() {
