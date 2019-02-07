@@ -22,6 +22,7 @@ export class AudioPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spark = this.dataService.getSpark();
     if (this.spark.phone.registered) {
       this.bindCallEvents();
     } else {
@@ -38,7 +39,6 @@ export class AudioPanelComponent implements OnInit {
 
   makeCall() {
     try {
-      this.spark = this.dataService.getSpark();
       this.spark.phone.register()
         .then(() => {
           this.bindCallEvents();
