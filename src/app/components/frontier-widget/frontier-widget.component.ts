@@ -1,6 +1,6 @@
-import {Component, OnInit, ElementRef, Input} from '@angular/core';
-import {DataService} from "../../services/data.service";
-import {log} from "util";
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {DataService} from '../../services/data.service';
+import {IncomingCallAnswerService} from '../../services/incoming-call-answer.service';
 
 @Component({
   selector: 'app-frontier-widget',
@@ -18,13 +18,50 @@ export class FrontierWidgetComponent implements OnInit {
   contextPanelData: any;
   spark: any;
 
-  constructor(private elm: ElementRef, private dataService: DataService) {
+  constructor(private elm: ElementRef, private dataService: DataService, private incomingCallAnswerService: IncomingCallAnswerService) {
     this.email = elm.nativeElement.getAttribute('email');
-    // this.spark = this.dataService.getSpark();
   }
 
   ngOnInit() {
-    console.log('frontier init');
+    const audio = new Audio('/assets/ringing-tones/tone.mp3');
+
+    const div = document.createElement('div');
+    div.className = 'frontier_message';
+    div.style.visibility = 'hidden';
+
+    const p = document.createElement('p');
+    p.className = 'frontier_message--box';
+
+    const acceptButton = document.createElement('button');
+    acceptButton.className = 'accept';
+    acceptButton.textContent = 'Accept';
+    acceptButton.onclick = () => {
+      this.incomingCallAnswerService.setCallState(true);
+      div.style.visibility = 'hidden';
+      audio.pause();
+    };
+
+    const declineButton = document.createElement('button');
+    declineButton.className = 'decline';
+    declineButton.textContent = 'Decline';
+    declineButton.onclick = () => {
+      this.incomingCallAnswerService.setCallState(false);
+      div.style.visibility = 'hidden';
+      audio.pause();
+    };
+
+    div.appendChild(p);
+    p.appendChild(acceptButton);
+    p.appendChild(declineButton);
+
+    this.elm.nativeElement.appendChild(div);
+
+    this.incomingCallAnswerService.getShowIncomingCallWidgetState().subscribe((res) => {
+      if (res === true) {
+        div.style.visibility = 'visible';
+        audio.play();
+      }
+    });
   }
 
   showHidePanelContainer(event) {
@@ -65,14 +102,27 @@ export class FrontierWidgetComponent implements OnInit {
               return Promise.resolve();
             })
             .then((person) => {
+
               console.log('receiving call');
               const str = person ? `Anwser incoming call from ${person.displayName}` : 'Answer incoming call';
-              if (confirm(str)) {
-                call.answer();
-                // bindCallEvents(call);
-              } else {
-                call.decline();
-              }
+
+              this.incomingCallAnswerService.getCallState().subscribe((res) => {
+                if (res === true) {
+                  call.answer();
+                  this.incomingCallAnswerService.setCallState(undefined);
+                }
+                if (res === false) {
+                  call.decline();
+                  this.incomingCallAnswerService.setCallState(undefined);
+                }
+              });
+
+              // if (confirm(str)) {
+              //   call.answer();
+              //   // bindCallEvents(call);
+              // } else {
+              //   call.decline();
+              // }
             })
             .catch((err) => {
               console.error(err);

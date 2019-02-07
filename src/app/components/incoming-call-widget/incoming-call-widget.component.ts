@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {IncomingCallAnswerService} from "../../services/incoming-call-answer.service";
 
 @Component({
   selector: 'app-incoming-call-widget',
@@ -7,15 +8,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class IncomingCallWidgetComponent implements OnInit {
 
-  @Output() incomingCallStateEmit: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor() {
+  constructor(private incomingCallAnswerService: IncomingCallAnswerService) {
   }
 
   ngOnInit() {
   }
 
   incomingCallFunction(state) {
-    this.incomingCallStateEmit.emit(state);
+    this.incomingCallAnswerService.setCallState(state);
   }
 }

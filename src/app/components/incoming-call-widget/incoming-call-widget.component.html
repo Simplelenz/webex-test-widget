@@ -1,4 +1,6 @@
-<div>
-  <span (click)="incomingCallFunction(true)">Answer</span>
-  <span (click)="incomingCallFunction(false)">Decline</span>
+<div class="frontier_message">
+  <p class="frontier_message--box">
+    <button class="accept" (click)="incomingCallFunction(true)">Accept</button>
+    <button class="decline" (click)="incomingCallFunction(false)">Decline</button>
+  </p>
 </div>

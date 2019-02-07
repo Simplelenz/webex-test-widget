@@ -9,6 +9,7 @@ import {HttpService} from '../../services/http.service';
 import {DataService} from '../../services/data.service';
 import {interval} from 'rxjs/observable/interval';
 import {SimpleChanges} from '@angular/core';
+import {IncomingCallAnswerService} from "../../services/incoming-call-answer.service";
 
 @Component({
   selector: 'app-panel-container',
@@ -50,7 +51,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   tempInterval: any;
   backDisable = false;
 
-  constructor(private httpService: HttpService, private dataService: DataService) {
+  constructor(private httpService: HttpService, private dataService: DataService, private incomingCallAnswerService: IncomingCallAnswerService) {
     if (this.contactList.length === 0) {
       this.getAllContacts();
     }
@@ -150,7 +151,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   closeVideoCallFunctionEmit() {
-    if (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video') {
+    if ((this.contextPanelData !== undefined) && (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video')) {
       this.clickClose();
     } else {
       this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
@@ -159,7 +160,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   closeAudioCallFunctionEmit() {
-    if (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video') {
+    if ((this.contextPanelData !== undefined) && (this.contextPanelData.conversation === 'audio' || this.contextPanelData.conversation === 'video')) {
       this.clickClose();
     } else {
       this.visibleTabs = {CONVERSATION: false, CONTACTS: false, VIDEO: false, AUDIO: false, MESSAGE: true};
@@ -338,13 +339,30 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
             return Promise.resolve();
           })
           .then((person) => {
+
+            this.incomingCallAnswerService.setShowIncomingCallWidgetState(true);
+
             const str = person ? `Anwser incoming call from ${person.displayName}` : 'Answer incoming call';
-            if (confirm(str)) {
-              call.answer();
-              // bindCallEvents(call);
-            } else {
-              call.decline();
-            }
+
+            this.incomingCallAnswerService.getCallState().subscribe((res) => {
+              if (res === true) {
+                call.answer();
+                this.incomingCallAnswerService.setCallState(undefined);
+                this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
+              }
+              if (res === false) {
+                call.decline();
+                this.incomingCallAnswerService.setCallState(undefined);
+                this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
+              }
+            });
+
+            // if (confirm(str)) {
+            //   call.answer();
+            //   // bindCallEvents(call);
+            // } else {
+            //   call.decline();
+            // }
           })
           .catch((err) => {
             console.error(err);

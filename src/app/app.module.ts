@@ -35,6 +35,7 @@ import {PressEnterDirective} from './components/message-panel/KeyPress';
 import { ContextMenuPopupComponent } from './components/context-menu-popup/context-menu-popup.component';
 import { ContextMenuPanelComponent } from './components/context-menu-panel/context-menu-panel.component';
 import { IncomingCallWidgetComponent } from './components/incoming-call-widget/incoming-call-widget.component';
+import {IncomingCallAnswerService} from "./services/incoming-call-answer.service";
 
 const appRoutes: Routes = [];
 
@@ -80,7 +81,8 @@ const appRoutes: Routes = [];
     HttpService,
     ConfigService,
     MockService,
-    DataService
+    DataService,
+    IncomingCallAnswerService
   ],
   bootstrap: [FrontierWidgetComponent]
 })
