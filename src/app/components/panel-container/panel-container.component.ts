@@ -89,7 +89,7 @@ export class PanelContainerComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    this.handleIncomingCalls();
+    // this.handleIncomingCalls();
   }
 
   clickClose() {

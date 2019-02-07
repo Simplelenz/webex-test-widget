@@ -103,6 +103,7 @@ export class FrontierWidgetComponent implements OnInit {
 
               this.incomingCallAnswerService.getCallState().subscribe((res) => {
                 if (res === true) {
+                  console.log('answer');
                   call.answer();
                   this.incomingCallAnswerService.setCallState(undefined);
                   this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
