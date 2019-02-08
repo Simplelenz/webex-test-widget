@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {IncomingCallAnswerService} from '../../services/incoming-call-answer.service';
 
@@ -17,6 +17,9 @@ export class FrontierWidgetComponent implements OnInit {
   avatarContact: any;
   contextPanelData: any;
   spark: any;
+
+  @ViewChild('selfAudioElem') selfAudioElem: ElementRef;
+  @ViewChild('remoteAudioElem') remoteAudioElem: ElementRef;
 
   constructor(private elm: ElementRef, private dataService: DataService, private incomingCallAnswerService: IncomingCallAnswerService) {
     this.email = elm.nativeElement.getAttribute('email');
@@ -61,6 +64,10 @@ export class FrontierWidgetComponent implements OnInit {
         div.style.visibility = 'visible';
         audio.play();
       }
+      if (res === false) {
+        div.style.visibility = 'hidden';
+        audio.pause();
+      }
     });
   }
 
@@ -97,6 +104,7 @@ export class FrontierWidgetComponent implements OnInit {
             })
             .then((person) => {
 
+              this.bindIncomingCallEvents(call);
               this.incomingCallAnswerService.setShowIncomingCallWidgetState(true);
 
               const str = person ? `Anwser incoming call from ${person.displayName}` : 'Answer incoming call';
@@ -148,5 +156,37 @@ export class FrontierWidgetComponent implements OnInit {
     this.showContextMenu = false;
     this.showPanelContainer = true;
     this.contextPanelData = {'contact': this.avatarContact, 'conversation': 'video'};
+  }
+
+  bindIncomingCallEvents(call) {
+    call.on('error', (err) => {
+      console.error(err);
+      alert(err.stack);
+    });
+
+    call.once('localMediaStream:change', () => {
+      this.selfAudioElem.nativeElement.srcObject = call.localMediaStream;
+    });
+
+    call.on('remoteMediaStream:change', () => {
+      [
+        'audio',
+        'video'
+      ].forEach((kind) => {
+        if (call.remoteMediaStream) {
+          const track = call.remoteMediaStream.getTracks().find((t) => t.kind === kind);
+          if (track) {
+            this.remoteAudioElem.nativeElement.srcObject = new MediaStream([track]);
+          }
+        }
+      });
+    });
+
+    call.on('inactive', () => {
+      this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
+      this.remoteAudioElem.nativeElement.srcObject = undefined;
+      this.selfAudioElem.nativeElement.srcObject = undefined;
+    });
+
   }
 }

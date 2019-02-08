@@ -13,3 +13,6 @@
                         (clickVideoCallFunction)="clickVideoCallFunction()"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>
 <ng-container *ngIf="isSuccess" appCiscospark (sparkInitEmitter)="isSparkInit($event)"></ng-container>
+
+<audio class="video" #selfAudioElem autoplay></audio>
+<audio class="video" #remoteAudioElem autoplay></audio>
