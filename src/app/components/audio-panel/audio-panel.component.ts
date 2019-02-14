@@ -10,6 +10,8 @@ import {DataService} from '../../services/data.service';
 export class AudioPanelComponent implements OnInit {
   spark: any;
   call: any;
+  participants: any = [];
+  isMute = false;
 
   @Output() closeAudioCallFunction: EventEmitter<any> = new EventEmitter<any>();
   IconConstant: any = IconConstant;
@@ -56,6 +58,11 @@ export class AudioPanelComponent implements OnInit {
     };
     this.call = this.spark.phone.dial(this.contact.id, {constraints});
 
+    this.call.on('active', () => {
+      this.participants = (this.call.locus.participants);
+      console.log(this.participants);
+    });
+
     this.call.on('error', (err) => {
       console.error(err);
       alert(err.stack);
@@ -89,6 +96,15 @@ export class AudioPanelComponent implements OnInit {
       this.selfAudioElem.nativeElement.srcObject = undefined;
     });
 
+  }
+
+  muteButton() {
+    if (this.isMute) {
+      this.isMute = false;
+    } else {
+      this.isMute = true;
+    }
+    this.selfAudioElem.nativeElement.muted = (this.isMute);
   }
 
 }

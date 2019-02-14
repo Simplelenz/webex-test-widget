@@ -17,9 +17,9 @@ export class FrontierWidgetComponent implements OnInit {
   avatarContact: any;
   contextPanelData: any;
   spark: any;
-
-  @ViewChild('selfAudioElem') selfAudioElem: ElementRef;
-  @ViewChild('remoteAudioElem') remoteAudioElem: ElementRef;
+  showIncomingCallPanel = false;
+  answeredCall: any;
+  callerName: any;
 
   constructor(private elm: ElementRef, private dataService: DataService, private incomingCallAnswerService: IncomingCallAnswerService) {
     this.email = elm.nativeElement.getAttribute('email');
@@ -34,6 +34,18 @@ export class FrontierWidgetComponent implements OnInit {
 
     const p = document.createElement('p');
     p.className = 'frontier_message--box';
+
+    const calling = document.createElement('span');
+    calling.textContent = 'is calling...';
+    calling.style.color = '#aaaaaa';
+    calling.style.padding = '6px';
+
+    const callerName = document.createElement('span');
+    callerName.id = 'callerName';
+    callerName.style.color = '#ffffff';
+    callerName.style.padding = '6px';
+    callerName.style.paddingRight = '0px';
+    callerName.style.fontWeight = '600';
 
     const acceptButton = document.createElement('button');
     acceptButton.className = 'accept';
@@ -54,6 +66,8 @@ export class FrontierWidgetComponent implements OnInit {
     };
 
     div.appendChild(p);
+    p.appendChild(callerName);
+    p.appendChild(calling);
     p.appendChild(acceptButton);
     p.appendChild(declineButton);
 
@@ -104,15 +118,23 @@ export class FrontierWidgetComponent implements OnInit {
             })
             .then((person) => {
 
-              this.bindIncomingCallEvents(call);
               this.incomingCallAnswerService.setShowIncomingCallWidgetState(true);
 
               const str = person ? `Anwser incoming call from ${person.displayName}` : 'Answer incoming call';
+
+              call.on('inactive', () => {
+                this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
+              });
+
+              this.callerName = (person.displayName);
+              document.getElementById('callerName').textContent = this.callerName;
 
               this.incomingCallAnswerService.getCallState().subscribe((res) => {
                 if (res === true) {
                   console.log('answer');
                   call.answer();
+                  this.answeredCall = call;
+                  this.showIncomingCallPanel = true;
                   this.incomingCallAnswerService.setCallState(undefined);
                   this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
                 }
@@ -158,35 +180,11 @@ export class FrontierWidgetComponent implements OnInit {
     this.contextPanelData = {'contact': this.avatarContact, 'conversation': 'video'};
   }
 
-  bindIncomingCallEvents(call) {
-    call.on('error', (err) => {
-      console.error(err);
-      alert(err.stack);
-    });
-
-    call.once('localMediaStream:change', () => {
-      this.selfAudioElem.nativeElement.srcObject = call.localMediaStream;
-    });
-
-    call.on('remoteMediaStream:change', () => {
-      [
-        'audio',
-        'video'
-      ].forEach((kind) => {
-        if (call.remoteMediaStream) {
-          const track = call.remoteMediaStream.getTracks().find((t) => t.kind === kind);
-          if (track) {
-            this.remoteAudioElem.nativeElement.srcObject = new MediaStream([track]);
-          }
-        }
-      });
-    });
-
-    call.on('inactive', () => {
-      this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
-      this.remoteAudioElem.nativeElement.srcObject = undefined;
-      this.selfAudioElem.nativeElement.srcObject = undefined;
-    });
-
+  closeIncomingCall() {
+    if (this.answeredCall) {
+      this.answeredCall.hangup();
+      this.answeredCall = undefined;
+    }
+    this.showIncomingCallPanel = false;
   }
 }

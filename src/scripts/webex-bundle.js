@@ -1002,11 +1002,11 @@ assign(Base.prototype, Events, {
     serialize: function (options) {
         var attrOpts = assign({props: true}, options);
         var res = this.getAttributes(attrOpts, true);
-        
+
         var setFromSerializedValue = function (value, key) {
 	        res[key] = this[key].serialize();
         }.bind(this);
-        
+
         forOwn(this._children, setFromSerializedValue);
         forOwn(this._collections, setFromSerializedValue);
         return res;
@@ -20438,13 +20438,13 @@ function objectToString(o) {
             }
             browserName = 'IE';
         }
-        // In Chrome, the true version is after 'Chrome' 
+        // In Chrome, the true version is after 'Chrome'
         else if (isChrome) {
             verOffset = nAgt.indexOf('Chrome');
             browserName = 'Chrome';
             fullVersion = nAgt.substring(verOffset + 7);
         }
-        // In Safari, the true version is after 'Safari' or after 'Version' 
+        // In Safari, the true version is after 'Safari' or after 'Version'
         else if (isSafari) {
             verOffset = nAgt.indexOf('Safari');
 
@@ -20459,14 +20459,14 @@ function objectToString(o) {
                 fullVersion = navigator.userAgent.split('Version/')[1].split(' ')[0];
             }
         }
-        // In Firefox, the true version is after 'Firefox' 
+        // In Firefox, the true version is after 'Firefox'
         else if (isFirefox) {
             verOffset = nAgt.indexOf('Firefox');
             browserName = 'Firefox';
             fullVersion = nAgt.substring(verOffset + 8);
         }
 
-        // In most other browsers, 'name/version' is at the end of userAgent 
+        // In most other browsers, 'name/version' is at the end of userAgent
         else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
             browserName = nAgt.substring(nameOffset, verOffset);
             fullVersion = nAgt.substring(verOffset + 1);
@@ -52027,7 +52027,7 @@ function bytesToUuid(buf, offset) {
   var i = offset || 0;
   var bth = byteToHex;
   // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
+  return ([bth[buf[i++]], bth[buf[i++]],
 	bth[buf[i++]], bth[buf[i++]], '-',
 	bth[buf[i++]], bth[buf[i++]], '-',
 	bth[buf[i++]], bth[buf[i++]], '-',

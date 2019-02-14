@@ -36,6 +36,8 @@ import { ContextMenuPopupComponent } from './components/context-menu-popup/conte
 import { ContextMenuPanelComponent } from './components/context-menu-panel/context-menu-panel.component';
 import { IncomingCallWidgetComponent } from './components/incoming-call-widget/incoming-call-widget.component';
 import {IncomingCallAnswerService} from "./services/incoming-call-answer.service";
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { IncomingCallPanelComponent } from './components/incoming-call-panel/incoming-call-panel.component';
 
 const appRoutes: Routes = [];
 
@@ -64,7 +66,9 @@ const appRoutes: Routes = [];
     PressEnterDirective,
     ContextMenuPopupComponent,
     ContextMenuPanelComponent,
-    IncomingCallWidgetComponent
+    IncomingCallWidgetComponent,
+    LoginFormComponent,
+    IncomingCallPanelComponent
   ],
   imports: [
     BrowserModule,

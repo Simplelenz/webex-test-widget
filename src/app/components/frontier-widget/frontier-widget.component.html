@@ -1,18 +1,21 @@
 <app-auth (authSuccessEmitter)="isAuthSuccess($event)"></app-auth>
 
-<app-panel-container *ngIf="showPanelContainer && isSuccess" [email]="email" [contextPanelData]="contextPanelData"
+<app-panel-container id="panelContainer" *ngIf="showPanelContainer && isSuccess" [email]="email"
+                     [contextPanelData]="contextPanelData"
                      (close)="showHidePanelContainer($event)"></app-panel-container>
-<app-frontier-opener *ngIf="!showPanelContainer && isSuccess && showContextMenu"
+<app-frontier-opener id="frontierOpener" *ngIf="!showPanelContainer && isSuccess && showContextMenu"
                      (showPanelContainer)="showHidePanelContainer($event)"></app-frontier-opener>
-<app-context-menu-panel *ngIf="!showPanelContainer && showContextMenu && isSuccess"
+<app-context-menu-panel id="contextMenu" *ngIf="!showPanelContainer && showContextMenu && isSuccess"
                         (avatarContactEmit)="setAvatarContact($event)"
                         (clickAvatarEmit)="contextPopUp($event)"></app-context-menu-panel>
-<app-context-menu-popup *ngIf="!showPanelContainer && isSuccess" [showPopUp]="showContextPopUp"
+<app-context-menu-popup id="contextMenuPopUp" *ngIf="!showPanelContainer && isSuccess" [showPopUp]="showContextPopUp"
                         [contact]="avatarContact"
                         (clickChatFunction)="emitConversation($event)" (clickCallFunction)="clickCallFunction()"
                         (clickVideoCallFunction)="clickVideoCallFunction()"
                         (clickSpaceEmit)="contextPopUp($event)"></app-context-menu-popup>
 <ng-container *ngIf="isSuccess" appCiscospark (sparkInitEmitter)="isSparkInit($event)"></ng-container>
 
-<audio class="video" #selfAudioElem autoplay></audio>
-<audio class="video" #remoteAudioElem autoplay></audio>
+<app-login-form *ngIf="false"></app-login-form>
+
+<app-incoming-call-panel *ngIf="showIncomingCallPanel" [answeredCall]="answeredCall" [callerName]="callerName"
+                         (closeIncomingCallEmit)="closeIncomingCall()"></app-incoming-call-panel>

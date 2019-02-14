@@ -1,0 +1,55 @@
+<div class="frontier">
+  <div class="frontier_mask"></div>
+  <div class="frontier_widget">
+    <div class="frontier_widget--box">
+      <div class="content">
+        <div class="content-wrap">
+
+          <div class="tabs-stage">
+
+            <div id="conversion-panel" class="panel">
+              <div class="panel_wrapper">
+                <div class="additional_info">
+                  <div class="additional_info--box">
+                    <p class="title">
+                      <span class="name"
+                            style="width: 100% !important; text-align: center !important;">{{callerName}}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="results">
+                  <div class="results_box">
+                    <div class="call-view">
+                      <div class="video">
+                        <div class="screen" style="display: flex;height: 180px; margin-bottom: 25px">
+                          <video #self class="video" autoplay
+                                 style="width: 60px; outline: 1px solid #21C0E1; margin: 5px;"></video>
+                          <video #remoteVideo class="video" autoplay
+                                 style="width: 60px; outline: 1px solid #21C0E1; margin: 5px;"></video>
+                          <audio #remoteAudio class="video" autoplay
+                                 style="width: 60px; outline: 1px solid #21C0E1; margin: 5px;"></audio>
+                        </div>
+                        <div class="options">
+                          <button (click)="muteButton()" class="volume">
+                            <app-icon
+                              [faIconString]="(isMute)? IconConstant.CALL_MUTE : IconConstant.CALL_VOLUME"></app-icon>
+                          </button>
+                          <button (click)="closeCall()" class="cancel">
+                            <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

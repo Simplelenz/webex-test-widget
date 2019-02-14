@@ -5,10 +5,11 @@
       <div class="additional_info">
         <div class="additional_info--box">
           <p class="title">
-            <span><i class="fas fa-users"></i></span>conversation 1
-          </p>
-          <p class="partcipants">
-            <span>4</span>&nbsp;Partcipants
+            <span *ngIf="contact?.type == 'group'" class="icon"><img src="./assets/images/icons/icon-conversation.png"
+                                                                     alt="conversation icon"></span>
+            <span *ngIf="contact?.type == 'direct'" class="icon"><img src="./assets/images/icons/icon-contact.png"
+                                                                      alt="contact icon"></span>
+            <span class="name">{{contact?.title}}</span>
           </p>
         </div>
       </div>
@@ -16,27 +17,18 @@
         <div class="results_box">
           <div class="call-view">
             <div class="video">
-              <div class="screen">
-                <!-- <img src="./assets/images/video-screen.png" alt="video"> -->
-                <video class="video" #selfVideoElem autoplay></video>
-                <video class="video" #remoteVideoElem autoplay></video>
+              <div class="screen" style="display: flex;height: 180px; margin-bottom: 25px">
+                <video class="video" #selfVideoElem autoplay style="width: 60px;"></video>
+                <video class="video" #remoteVideoElem autoplay style="width: 60px;"></video>
               </div>
               <div class="options">
-                <button class="volume">
-                  <app-icon [faIconString]="IconConstant.CALL_VOLUME"></app-icon>
+                <button (click)="muteButton()" class="volume">
+                  <app-icon [faIconString]="(isMute)? IconConstant.CALL_MUTE : IconConstant.CALL_VOLUME"></app-icon>
                 </button>
                 <button (click)="closeCall()" class="cancel">
                   <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
                 </button>
               </div>
-            </div>
-            <div class="participants">
-              <ul>
-                <li><span class="status active"></span>participant 1</li>
-                <li><span class="status active"></span>participant 2</li>
-                <li><span class="status inactive"></span>participant 3</li>
-                <li><span class="status active"></span>participant 4</li>
-              </ul>
             </div>
           </div>
         </div>

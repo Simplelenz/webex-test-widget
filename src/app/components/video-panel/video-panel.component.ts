@@ -10,6 +10,7 @@ import {DataService} from '../../services/data.service';
 export class VideoPanelComponent implements OnInit {
   spark: any;
   call: any;
+  isMute = false;
 
   @Output() closeVideoCallFunction: EventEmitter<any> = new EventEmitter<any>();
   IconConstant: any = IconConstant;
@@ -50,7 +51,7 @@ export class VideoPanelComponent implements OnInit {
       audio: true,
       video: true
     };
-    this.call = this.spark.phone.dial(this.contact.id, { constraints });
+    this.call = this.spark.phone.dial(this.contact.id, {constraints});
 
     this.call.on('error', (err) => {
       console.error(err);
@@ -81,10 +82,18 @@ export class VideoPanelComponent implements OnInit {
     // Once the call ends, we'll want to clean up our UI a bit
     this.call.on('inactive', () => {
       // Remove the streams from the UI elements
-      this.remoteVideoElem.nativeElement.srcObject = undefined;
       this.selfVideoElem.nativeElement.srcObject = undefined;
+      this.remoteVideoElem.nativeElement.srcObject = undefined;
     });
 
   }
 
+  muteButton() {
+    if (this.isMute) {
+      this.isMute = false;
+    } else {
+      this.isMute = true;
+    }
+    this.selfVideoElem.nativeElement.muted = (this.isMute);
+  }
 }
