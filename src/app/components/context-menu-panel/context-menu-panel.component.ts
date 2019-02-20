@@ -2,6 +2,10 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {URL} from '../../configurations/UrlConstants';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {HttpService} from '../../services/http.service';
+import {CONF, Constant} from '../../configurations/StringConstants';
+import {ConfigService} from '../../services/config.service';
+import {UtilService} from '../../services/util.service';
+import {LoginService} from '../../services/login.service';
 
 @Component({
   selector: 'app-context-menu-panel',
@@ -14,12 +18,16 @@ export class ContextMenuPanelComponent implements OnInit {
   @Output() avatarContactEmit: EventEmitter<any> = new EventEmitter<any>();
 
   contactList: any = [];
+  private clientId: string;
+  private clientSecret: string;
 
-  constructor(private httpService: HttpService) {
+  constructor(private utilService: UtilService, private loginService: LoginService, private httpService: HttpService, private configService: ConfigService) {
     this.getAllContacts();
   }
 
   ngOnInit() {
+    this.clientId = this.configService.get(CONF.FRONTIER, CONF.CLIENT_ID);
+    this.clientSecret = this.configService.get(CONF.FRONTIER, CONF.CLIENT_SECRET);
   }
 
   clickAvatar(contact) {
@@ -40,6 +48,26 @@ export class ContextMenuPanelComponent implements OnInit {
 
     }), error => {
       console.log(error);
+      if ((error.status === 401) && (error.statusText === 'Unauthorized')) {
+
+        try {
+          if (JSON.parse(error['_body']).message.includes(Constant.REFRESH_ACCESS_TOKEN_ERROR)) {
+            const refreshToken = JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).refresh_token;
+            const subscription = this.loginService.refreshAccessToken('refresh_token', this.clientId, this.clientSecret, refreshToken).subscribe(
+              response => {
+                subscription.unsubscribe();
+                const isAuthenticated = JSON.parse(response['_body']).access_token ? true : false;
+                localStorage.setItem(Constant.IS_AUTHENTICATED, isAuthenticated.toString());
+                localStorage.setItem(Constant.WEBEX_TOKENS, response['_body']);
+                window.location.reload();
+              }
+            );
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
+      }
     });
   }
 

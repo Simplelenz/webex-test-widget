@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Constant, CONF } from '../configurations/StringConstants';
-import { URL } from '../configurations/UrlConstants';
-import { LoginService } from '../services/login.service';
-import { UtilService } from '../services/util.service';
-import { ConfigService } from '../services/config.service';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import {Constant, CONF} from '../configurations/StringConstants';
+import {URL} from '../configurations/UrlConstants';
+import {LoginService} from '../services/login.service';
+import {UtilService} from '../services/util.service';
+import {ConfigService} from '../services/config.service';
 
 @Component({
   selector: 'app-auth',
