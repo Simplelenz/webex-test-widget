@@ -54,17 +54,25 @@ export class ContextMenuPanelComponent implements OnInit {
           if (JSON.parse(error['_body']).message.includes(Constant.REFRESH_ACCESS_TOKEN_ERROR)) {
             const refreshToken = JSON.parse(localStorage.getItem(Constant.WEBEX_TOKENS)).refresh_token;
             const subscription = this.loginService.refreshAccessToken('refresh_token', this.clientId, this.clientSecret, refreshToken).subscribe(
-              response => {
+              (response) => {
                 subscription.unsubscribe();
                 const isAuthenticated = JSON.parse(response['_body']).access_token ? true : false;
                 localStorage.setItem(Constant.IS_AUTHENTICATED, isAuthenticated.toString());
                 localStorage.setItem(Constant.WEBEX_TOKENS, response['_body']);
+                window.location.reload();
+              }, (err) => {
+                console.log(err);
+                localStorage.setItem(Constant.IS_AUTHENTICATED, (false).toString());
+                localStorage.setItem(Constant.IS_WEBEX_LOGIN_DIRECTED, (false).toString());
                 window.location.reload();
               }
             );
           }
         } catch (error) {
           console.error(error);
+          localStorage.setItem(Constant.IS_AUTHENTICATED, (false).toString());
+          localStorage.setItem(Constant.IS_WEBEX_LOGIN_DIRECTED, (false).toString());
+          window.location.reload();
         }
 
       }
