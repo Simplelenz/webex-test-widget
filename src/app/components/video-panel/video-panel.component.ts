@@ -91,6 +91,7 @@ export class VideoPanelComponent implements OnInit {
   muteButton() {
     if (this.isMute) {
       this.isMute = false;
+      this.call.startSendingVideo();
     } else {
       this.isMute = true;
       this.call.stopSendingVideo();

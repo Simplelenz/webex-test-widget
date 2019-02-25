@@ -101,6 +101,7 @@ export class AudioPanelComponent implements OnInit {
   muteButton() {
     if (this.isMute) {
       this.isMute = false;
+      this.call.startSendingAudio();
     } else {
       this.isMute = true;
       this.call.stopSendingAudio();
