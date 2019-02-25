@@ -16,6 +16,7 @@ export class IncomingCallPanelComponent implements OnInit {
   frontierOpener: any;
   contextMenu: any;
   contextMenuPopUp: any;
+  participants: any = [];
 
   @Output() closeIncomingCallEmit: EventEmitter<any> = new EventEmitter();
   @Input() answeredCall: any;
@@ -57,8 +58,12 @@ export class IncomingCallPanelComponent implements OnInit {
   muteButton() {
     if (this.isMute) {
       this.isMute = false;
+      this.answeredCall.startSendingAudio();
+      this.answeredCall.startSendingVideo();
     } else {
       this.isMute = true;
+      this.answeredCall.stopSendingAudio();
+      this.answeredCall.stopSendingVideo();
     }
     this.self.nativeElement.muted = (this.isMute);
   }
@@ -84,9 +89,29 @@ export class IncomingCallPanelComponent implements OnInit {
   }
 
   bindIncomingCallEvents(call) {
+
+    call.on('active', () => {
+      const videoParticipants = document.getElementById('videoParticipants');
+      this.participants = (call.locus.participants);
+      console.log(this.participants);
+      (this.participants).forEach((participant) => {
+        const participants = document.createElement('li');
+        const status = document.createElement('span');
+        status.className = 'status active';
+        const participantName = document.createElement('span');
+        participantName.textContent = participant.person.name;
+        if (participants) {
+          participants.appendChild(status);
+          participants.appendChild(participantName);
+        }
+        if (videoParticipants) {
+          videoParticipants.appendChild(participants);
+        }
+      });
+    });
+
     call.on('error', (err) => {
       console.error(err);
-      alert(err.stack);
     });
 
     call.once('localMediaStream:change', () => {

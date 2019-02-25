@@ -19,9 +19,10 @@
             <div class="video">
               <div class="screen" style="display: flex;height: 180px; margin-bottom: 25px">
                 <audio class="video" #selfVideoElem autoplay style="width: 60px;"></audio>
-                <video class="video" #remoteVideoElem autoplay style="width: 60px;"></video>
+                <video class="video" #remoteVideoElem autoplay
+                       style="width: 60px;border: #07c1e4 2px solid;border-radius: 7px; background: #ccc;"></video>
               </div>
-              <div class="options">
+              <div class="options" style="margin-left: 50%">
                 <button (click)="muteButton()" class="volume">
                   <app-icon [faIconString]="(isMute)? IconConstant.CALL_MUTE : IconConstant.CALL_VOLUME"></app-icon>
                 </button>
@@ -29,6 +30,10 @@
                   <app-icon [faIconString]="IconConstant.CONTACT_CLOSE"></app-icon>
                 </button>
               </div>
+            </div>
+            <div class="participants">
+              <ul id="videoParticipants">
+              </ul>
             </div>
           </div>
         </div>

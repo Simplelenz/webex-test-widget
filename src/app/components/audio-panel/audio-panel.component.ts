@@ -94,6 +94,7 @@ export class AudioPanelComponent implements OnInit {
       // Remove the streams from the UI elements
       this.remoteAudioElem.nativeElement.srcObject = undefined;
       this.selfAudioElem.nativeElement.srcObject = undefined;
+      this.closeCall();
     });
 
   }

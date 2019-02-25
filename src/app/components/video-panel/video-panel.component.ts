@@ -11,6 +11,7 @@ export class VideoPanelComponent implements OnInit {
   spark: any;
   call: any;
   isMute = false;
+  participants: any = [];
 
   @Output() closeVideoCallFunction: EventEmitter<any> = new EventEmitter<any>();
   IconConstant: any = IconConstant;
@@ -53,6 +54,26 @@ export class VideoPanelComponent implements OnInit {
     };
     this.call = this.spark.phone.dial(this.contact.id, {constraints});
 
+    this.call.on('active', () => {
+      const videoParticipants = document.getElementById('videoParticipants');
+      this.participants = (this.call.locus.participants);
+      console.log(this.participants);
+      (this.participants).forEach((participant) => {
+        const participants = document.createElement('li');
+        const status = document.createElement('span');
+        status.className = 'status active';
+        const participantName = document.createElement('span');
+        participantName.textContent = participant.person.name;
+        if (participants) {
+          participants.appendChild(status);
+          participants.appendChild(participantName);
+        }
+        if (videoParticipants) {
+          videoParticipants.appendChild(participants);
+        }
+      });
+    });
+
     this.call.on('error', (err) => {
       console.error(err);
       alert(err.stack);
@@ -84,6 +105,7 @@ export class VideoPanelComponent implements OnInit {
       // Remove the streams from the UI elements
       this.selfVideoElem.nativeElement.srcObject = undefined;
       this.remoteVideoElem.nativeElement.srcObject = undefined;
+      this.closeCall();
     });
 
   }
