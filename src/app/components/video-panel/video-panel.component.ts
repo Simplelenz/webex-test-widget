@@ -93,7 +93,7 @@ export class VideoPanelComponent implements OnInit {
       this.isMute = false;
     } else {
       this.isMute = true;
-      this.call.startSendingVideo();
+      this.call.stopSendingVideo();
     }
     this.selfVideoElem.nativeElement.muted = (this.isMute);
     this.remoteVideoElem.nativeElement.muted = (this.isMute);

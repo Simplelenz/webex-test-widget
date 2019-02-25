@@ -103,7 +103,7 @@ export class AudioPanelComponent implements OnInit {
       this.isMute = false;
     } else {
       this.isMute = true;
-      this.call.startSendingAudio();
+      this.call.stopSendingAudio();
     }
     this.selfAudioElem.nativeElement.muted = (this.isMute);
     this.remoteAudioElem.nativeElement.muted = (this.isMute);
