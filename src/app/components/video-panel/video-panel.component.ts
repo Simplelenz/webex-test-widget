@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ElementRef, Input} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, ElementRef, Input, OnDestroy} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {DataService} from '../../services/data.service';
 
@@ -7,7 +7,7 @@ import {DataService} from '../../services/data.service';
   templateUrl: './video-panel.component.html',
   styleUrls: ['./video-panel.component.css']
 })
-export class VideoPanelComponent implements OnInit {
+export class VideoPanelComponent implements OnInit, OnDestroy {
   spark: any;
   call: any;
   isMute = false;
@@ -26,6 +26,10 @@ export class VideoPanelComponent implements OnInit {
 
   ngOnInit() {
     this.makeCall();
+  }
+
+  ngOnDestroy(): void {
+    this.closeCall();
   }
 
   closeCall() {

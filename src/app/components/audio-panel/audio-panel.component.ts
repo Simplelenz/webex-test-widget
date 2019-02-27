@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {DataService} from '../../services/data.service';
 
@@ -7,7 +7,7 @@ import {DataService} from '../../services/data.service';
   templateUrl: './audio-panel.component.html',
   styleUrls: ['./audio-panel.component.css']
 })
-export class AudioPanelComponent implements OnInit {
+export class AudioPanelComponent implements OnInit, OnDestroy {
   spark: any;
   call: any;
   participants: any = [];
@@ -30,6 +30,10 @@ export class AudioPanelComponent implements OnInit {
     } else {
       this.makeCall();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.closeCall();
   }
 
   closeCall() {

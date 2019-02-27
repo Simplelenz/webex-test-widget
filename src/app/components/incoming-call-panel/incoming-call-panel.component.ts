@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, OnDestroy} from '@angular/core';
 import {IconConstant} from '../../configurations/IconConstants';
 import {IncomingCallAnswerService} from '../../services/incoming-call-answer.service';
 
@@ -7,7 +7,7 @@ import {IncomingCallAnswerService} from '../../services/incoming-call-answer.ser
   templateUrl: './incoming-call-panel.component.html',
   styleUrls: ['./incoming-call-panel.component.css']
 })
-export class IncomingCallPanelComponent implements OnInit {
+export class IncomingCallPanelComponent implements OnInit, OnDestroy {
 
   IconConstant: any = IconConstant;
   isMute = false;
@@ -53,6 +53,10 @@ export class IncomingCallPanelComponent implements OnInit {
 
     this.answeredCall.answer();
     this.bindIncomingCallEvents(this.answeredCall);
+  }
+
+  ngOnDestroy(): void {
+    this.closeCall();
   }
 
   muteButton() {
