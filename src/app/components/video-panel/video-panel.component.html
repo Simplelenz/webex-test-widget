@@ -18,9 +18,12 @@
           <div class="call-view">
             <div class="video">
               <div class="screen" style="display: flex;height: 180px; margin-bottom: 25px">
-                <audio class="video" #selfVideoElem autoplay style="width: 60px;"></audio>
+                <video class="video" #selfVideoElem autoplay
+                       style="width: 60px;border: #07c1e4 2px solid;border-radius: 7px; display: none;"></video>
                 <video class="video" #remoteVideoElem autoplay
                        style="width: 60px;border: #07c1e4 2px solid;border-radius: 7px;"></video>
+                <audio class="video" #remoteAudioElem autoplay
+                       style="width: 60px;border: #07c1e4 2px solid;border-radius: 7px;"></audio>
               </div>
               <div class="options" style="margin-left: 50%">
                 <button (click)="muteButton()" class="volume">

@@ -1575,7 +1575,6 @@ body::-webkit-scrollbar-thumb {
   position: fixed;
   top: 0;
   right: 0;
-  left: 0;
   z-index: 99999;
   display: -webkit-box;
   display: -ms-flexbox;

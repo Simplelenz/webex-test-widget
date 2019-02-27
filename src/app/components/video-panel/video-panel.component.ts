@@ -18,6 +18,7 @@ export class VideoPanelComponent implements OnInit {
 
   @ViewChild('selfVideoElem') selfVideoElem: ElementRef;
   @ViewChild('remoteVideoElem') remoteVideoElem: ElementRef;
+  @ViewChild('remoteAudioElem') remoteAudioElem: ElementRef;
   @Input() contact: any;
 
   constructor(private dataService: DataService) {
@@ -94,7 +95,12 @@ export class VideoPanelComponent implements OnInit {
         if (this.call.remoteMediaStream) {
           const track = this.call.remoteMediaStream.getTracks().find((t) => t.kind === kind);
           if (track) {
-            this.remoteVideoElem.nativeElement.srcObject = new MediaStream([track]);
+            if (kind === 'audio') {
+              this.remoteAudioElem.nativeElement.srcObject = new MediaStream([track]);
+            }
+            if (kind === 'video') {
+              this.remoteVideoElem.nativeElement.srcObject = new MediaStream([track]);
+            }
           }
         }
       });
@@ -105,6 +111,7 @@ export class VideoPanelComponent implements OnInit {
       // Remove the streams from the UI elements
       this.selfVideoElem.nativeElement.srcObject = undefined;
       this.remoteVideoElem.nativeElement.srcObject = undefined;
+      this.remoteAudioElem.nativeElement.srcObject = undefined;
       this.closeCall();
     });
 
@@ -113,12 +120,14 @@ export class VideoPanelComponent implements OnInit {
   muteButton() {
     if (this.isMute) {
       this.isMute = false;
+      this.call.startSendingAudio();
       this.call.startSendingVideo();
     } else {
       this.isMute = true;
+      this.call.stopSendingAudio();
       this.call.stopSendingVideo();
     }
     this.selfVideoElem.nativeElement.muted = (this.isMute);
-    this.remoteVideoElem.nativeElement.muted = (this.isMute);
+    // this.remoteVideoElem.nativeElement.muted = (this.isMute);
   }
 }
