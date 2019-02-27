@@ -126,7 +126,11 @@ export class FrontierWidgetComponent implements OnInit {
                 this.incomingCallAnswerService.setShowIncomingCallWidgetState(false);
               });
 
-              this.callerName = (person.displayName);
+              if (person) {
+                this.callerName = (person.displayName);
+              } else {
+                this.callerName = '';
+              }
               document.getElementById('callerName').textContent = this.callerName;
 
               this.incomingCallAnswerService.getCallState().subscribe((res) => {
